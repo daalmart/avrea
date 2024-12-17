@@ -1,0 +1,310 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Actividad Pragmático</title>
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-image: url("{% static 'blog/fondo2.png' %}");
+            background-size: cover; /* Mantiene la imagen proporcionada y cubre la pantalla */
+            background-position: center; /* Centra la imagen */
+            background-attachment: fixed; /* La imagen permanece fija al hacer scroll */
+            font-family: 'Source Sans Pro', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 20px 0;
+            text-align: center;
+            color: #ffffff;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 36px;
+        }
+        header h2 {
+            margin: 10px 0;
+            font-size: 24px;
+        }
+        .nav-right {
+            float: right;
+            margin-top: 20px;
+            margin-right: 20px;
+        }
+        .nav-right a {
+            color: #ffffff;
+            background-color: #007bff; /* Color lila */
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        .nav-right a:hover {
+            background-color: #6a1b9a;
+        }
+        .contenedor {
+            margin: 0 auto;
+            width: 80%;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+        }
+        h1 {
+            color: #8a2be2;
+        }
+        .blue-box {
+            background-color: #007bff;
+            color: white;
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            font-size: 1.2rem;
+        }
+        #elemento-tecnologico {
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        .toolbar {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        .toolbar button {
+            margin: 0 5px;
+            padding: 10px 15px;
+            font-size: 1rem;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            transition: background-color 0.3s, transform 0.2s;
+            background-color: #007bff; /* Color lila para todos los botones */
+        }
+        .toolbar button:hover {
+            background-color: #6a1b9a; /* Color lila más oscuro al pasar el ratón */
+            transform: scale(1.05);
+        }
+        #pizarra {
+            border: 2px solid #007bff;
+            background-color: #fff;
+            width: 600px;
+            height: 300px;
+            margin: 20px auto;
+            position: relative;
+        }
+        canvas {
+            width: 100%;
+            height: 100%;
+        }
+        .small-button {
+            font-size: 0.9rem;
+            padding: 10px 15px;
+            margin-top: 10px;
+            background-color: #007bff; /* Color para el botón guardar */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        .small-button:hover {
+            background-color: #6a1b9a; /* Color más oscuro al pasar el ratón */
+            transform: scale(1.05);
+        }
+        /* Botones de color para la pizarra */
+        .color-button {
+            background-color: #007bff;
+        }
+        .color-button.black { background-color: #000000; }
+        .color-button.red { background-color: #ff0000; }
+        .color-button.blue { background-color: #0000ff; }
+        .color-button.green { background-color: #00ff00; }
+        .color-button.yellow { background-color: #e6b800; } /* Amarillo más oscuro */
+        .color-button.purple { background-color: #8a2be2; } /* Lila transformado a morado */
+        .color-button.skyblue { background-color: #87ceeb; }
+        .color-button.gray { background-color: #808080; }
+        /* Estilos para botones de borrador */
+        .toolbar .eraser-button, .toolbar .clear-button {
+            background-color: #007bff; /* Mismo color que el botón Editar */
+        }
+    </style>
+</head>
+<body>
+    <div class="contenedor">
+        <div class="blue-box">
+            Piensa en un elemento tecnológico sencillo de tu casa que podría servir para clavar una puntilla en una superficie Ejemplo "Pared", "Madera", etc. Si ya tienes en mente uno, escribe tu respuesta aquí 👇🏼
+        </div>
+
+        <input type="text" id="barra-respuesta" placeholder="Escribe tu elemento aquí..." />
+        <button class="small-button" id="guardar-btn">Guardar respuesta</button>
+
+        <div id="elemento-tecnologico" style="display: none;">
+            Elemento tecnológico: <span id="respuesta-usuario"></span>
+            <button class="small-button" id="editar-btn" style="font-size: 0.8rem;">Editar</button>
+        </div>
+
+        <div class="blue-box" style="margin-top: 30px;"> <!-- Espaciado aumentado -->
+            Ahora en la siguiente pizarra dibuja ese elemento tecnológico con los colores que más te gusten, trata de dibujar la mayor cantidad de detalles para que te quede mejor.
+        </div>
+
+        <div class="toolbar" style="display:none;">
+            <button class="color-button black" onclick="cambiarColor('#000000')">Negro</button>
+            <button class="color-button red" onclick="cambiarColor('#ff0000')">Rojo</button>
+            <button class="color-button blue" onclick="cambiarColor('#0000ff')">Azul</button>
+            <button class="color-button green" onclick="cambiarColor('#00ff00')">Verde</button>
+            <button class="color-button yellow" onclick="cambiarColor('#e6b800')">Amarillo</button>
+            <button class="color-button purple" onclick="cambiarColor('#8a2be2')">Morado</button>
+            <button class="color-button skyblue" onclick="cambiarColor('#87ceeb')">Azul cielo</button>
+            <button class="color-button gray" onclick="cambiarColor('#808080')">Gris</button>
+            <button class="small-button eraser-button" onclick="activarBorrador()">Borrador</button>
+            <button class="small-button clear-button" onclick="borrar()">Borrar todo</button>
+        </div>
+
+        <div id="pizarra" style="display:none;">
+            <canvas id="canvas" width="600" height="300"></canvas>
+        </div>
+
+        <button class="small-button" id="finalizar-btn" style="margin-top: 20px; display: none;" aria-label="Finalizar actividad">Finalizar actividad</button>
+
+
+        
+        
+        <div class="actividad-siguiente">
+            <p>La siguiente actividad es: <strong>{{ Test_VARK }}</strong></p>
+        </div>
+    </div>
+
+    <script>
+        var canvas = document.getElementById('canvas');
+        var context = canvas.getContext('2d');
+        var painting = false;
+        var currentColor = '#000000'; // Color negro por defecto
+        var borrador = false;
+
+        // Iniciar dibujo
+        function startPosition(e) {
+            painting = true;
+            draw(e);
+        }
+
+        // Finalizar dibujo
+        function endPosition() {
+            painting = false;
+            context.beginPath();
+        }
+
+        // Dibujo en el canvas
+        function draw(e) {
+            if (!painting) return;
+
+            // Obtener las coordenadas del mouse
+            var rect = canvas.getBoundingClientRect();
+            var x = e.clientX - rect.left;
+            var y = e.clientY - rect.top;
+
+            context.lineWidth = 5;
+            context.lineCap = 'round';
+            context.strokeStyle = borrador ? '#ffffff' : currentColor;
+
+            context.lineTo(x, y);
+            context.stroke();
+            context.beginPath();
+            context.moveTo(x, y);
+        }
+
+        // Cambiar color
+        function cambiarColor(color) {
+            currentColor = color;
+            borrador = false;
+        }
+
+        // Activar el borrador
+        function activarBorrador() {
+            borrador = true;
+        }
+
+        // Borrar todo
+        function borrar() {
+            context.clearRect(0, 0, canvas.width, canvas.height);
+        }
+
+        // Guardar respuesta
+        document.getElementById('guardar-btn').onclick = function() {
+            var respuesta = document.getElementById('barra-respuesta').value;
+            if (respuesta) {
+                document.getElementById('respuesta-usuario').textContent = respuesta;
+                document.getElementById('elemento-tecnologico').style.display = 'block';
+                document.getElementById('barra-respuesta').value = '';
+                document.querySelector('.toolbar').style.display = 'block'; // Mostrar la barra de herramientas
+                document.getElementById('pizarra').style.display = 'block'; // Mostrar la pizarra
+                document.getElementById('finalizar-btn').style.display = 'block'; // Mostrar el botón de finalizar
+            } else {
+                alert('Por favor, ingresa un elemento tecnológico.');
+            }
+        }
+
+        // Editar respuesta
+        document.getElementById('editar-btn').onclick = function() {
+            var nuevaRespuesta = prompt("Edita tu elemento tecnológico:", document.getElementById('respuesta-usuario').textContent);
+            if (nuevaRespuesta) {
+                document.getElementById('respuesta-usuario').textContent = nuevaRespuesta;
+            }
+        }
+
+
+        // Establecer eventos para el canvas
+        canvas.addEventListener('mousedown', startPosition);
+        canvas.addEventListener('mouseup', endPosition);
+        canvas.addEventListener('mousemove', draw);
+
+        // Finalizar actividad
+        document.getElementById('finalizar-btn').onclick = function() {
+            // Verificar si la pizarra está vacía
+            if (isCanvasEmpty()) {
+                alert('Por favor, dibuja algo en la pizarra antes de continuar.');
+            } else {
+                alert('Actividad finalizada. ¡Gracias por participar!');
+                continuar(); // Llama a la función continuar para manejar la redirección
+            }
+        };
+
+        // Función para verificar si el canvas está vacío
+        function isCanvasEmpty() {
+            // Obtiene el contenido de los píxeles del canvas
+            var emptyData = context.getImageData(0, 0, canvas.width, canvas.height);
+            // Verifica si todos los píxeles son transparentes (255, 255, 255, 0)
+            for (var i = 0; i < emptyData.data.length; i += 4) {
+                if (emptyData.data[i + 3] !== 0) { // Si hay algún píxel que no es transparente
+                    return false; // El canvas no está vacío
+                }
+            }
+            return true; // El canvas está vacío
+        }
+
+        // Continuar a la siguiente actividad
+        function continuar() {
+            // Lógica para redirigir a la actividad correspondiente
+            let APT2 = "{{ Test_VARK }}"; // Suponiendo que APT2 se asigna en el contexto de Django
+            let url = "";
+            if (APT2 === "Visual") {
+                url = "{% url 'actividadVisual' %}";
+            } else if (APT2 === "Auditivo") {
+                url = "{% url 'actividadAuditivo' %}";
+            } else if (APT2 === "Escrito") {
+                url = "{% url 'actividadLE' %}";
+            } else if (APT2 === "Kinestésico") {
+                url = "{% url 'actividadKinestesico' %}";
+            } else {
+                alert("No se ha encontrado una actividad sugerida para APT2.");
+                return; // Salir de la función si no hay actividad
+            }
+
+            // Redirigir al enlace correspondiente
+            window.location.href = url; // Redirigir directamente a la URL
+        }
+    </script>
+{% endblock %}

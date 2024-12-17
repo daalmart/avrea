@@ -1,0 +1,774 @@
+<!-- templates/testuno.html -->
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<div class="container">
+    <h1>TEST UNO - HACEA</h1>
+    <form method="POST" action="{% url 'guardar_respuestas' %}">
+        {% csrf_token %}
+        <div style="display: flex;">
+            <div style="flex: 2;">
+                <div>
+                    <button class="tablinks" onclick="openTab(event, 'tab1')" id="defaultOpen">Pregunta 1-10</button>
+                    <button class="tablinks" onclick="openTab(event, 'tab2')">Pregunta 11-20</button>
+                    <button class="tablinks" onclick="openTab(event, 'tab3')">Pregunta 21-30</button>
+                    <button class="tablinks" onclick="openTab(event, 'tab4')">Pregunta 31-40</button>
+                    <button class="tablinks" onclick="openTab(event, 'tab5')">Pregunta 41-50</button>
+                    <button class="tablinks" onclick="openTab(event, 'tab6')">Pregunta 51-60</button>
+                    <button class="tablinks" onclick="openTab(event, 'tab7')">Pregunta 61-70</button>
+                    <button class="tablinks" onclick="openTab(event, 'tab8')">Pregunta 71-80</button>
+
+                </div>
+
+                <div id="tab1" class="tabcontent">
+                    <ul>
+                        <li><strong>Pregunta 1:</strong> Tengo fama de decir lo que pienso claramente y sin rodeos.   
+                            <label>
+                                <input type="radio" name="p1" value="1" required> Si
+                            </label>
+                            <label>
+                                <input type="radio" name="p1" value="0"> No
+                            </label>
+                        </li>
+                        <li><strong>Pregunta 2:</strong> Estoy seguro lo que es bueno y lo que es malo, lo que está bien y lo que está mal.  
+                            <label>
+                                <input type="radio" name="p2" value="1" required> Si
+                            </label>
+                            <label>
+                                <input type="radio" name="p2" value="0"> No
+                            </label>
+                        </li>
+                        <li><strong>Pregunta 3:</strong> Muchas veces actúo sin mirar las consecuencias.   
+                            <label>
+                                <input type="radio" name="p3" value="1" required> Si
+                            </label>
+                            <label>
+                                <input type="radio" name="p3" value="0"> No
+                            </label>
+                        </li>
+                        <li><strong>Pregunta 4:</strong> Normalmente trato de resolver los problemas metódicamente y paso a paso.   
+                            <label>
+                                <input type="radio" name="p4" value="1" required> Si
+                            </label>
+                            <label>
+                                <input type="radio" name="p4" value="0"> No
+                            </label>
+                        </li>
+                        <li><strong>Pregunta 5:</strong> Creo que los formalismos coartan y limitan la actuación libre de las personas.   
+                            <label>
+                                <input type="radio" name="p5" value="1" required> Si
+                            </label>
+                            <label>
+                                <input type="radio" name="p5" value="0"> No
+                            </label>
+                        </li>
+			            <li><strong>Pregunta 6:</strong> Me interesa saber cuáles son los sistemas de valores de los demás y con qué criterios actúan.    
+                            <label>
+                                <input type="radio" name="p6" value="1" required> Si
+                            </label>
+                            <label>
+                                <input type="radio" name="p6" value="0"> No
+                            </label>
+                        </li>
+                        <li><strong>Pregunta 7:</strong> Pienso que el actuar intuitivamente puede ser siempre tan válido como actuar reflexivamente.    
+                            <label>
+                                <input type="radio" name="p7" value="1" required> Si
+                            </label>
+                            <label>
+                                <input type="radio" name="p7" value="0"> No
+                            </label>
+                        </li>
+                        <li><strong>Pregunta 8:</strong> Creo que lo más importante es que las cosas funcionen.   
+                            <label>
+                                <input type="radio" name="p8" value="1" required> Si
+                            </label>
+                            <label>
+                                <input type="radio" name="p8" value="0"> No
+                            </label>
+                        </li>
+                        <li><strong>Pregunta 9:</strong> Procuro estar al tanto de lo que ocurre aquí y ahora.   
+                            <label>
+                                <input type="radio" name="p9" value="1" required> Si
+                            </label>
+                            <label>
+                                <input type="radio" name="p9" value="0"> No
+                            </label>
+                        </li>
+ 			            <li><strong>Pregunta 10:</strong> Disfruto cuando tengo tiempo para preparar mi trabajo y realizarlo a conciencia.    
+                            <label>
+                                <input type="radio" name="p10" value="1" required> Si
+                            </label>
+                            <label>
+                                <input type="radio" name="p10" value="0"> No
+                            </label>
+                        </li>   
+                    </ul>
+                </div>
+
+                <div id="tab2" class="tabcontent">
+                    <ul>
+                       
+			             <li><strong>Pregunta 11:</strong> Estoy a gusto siguiendo un orden, en las comidas, en el estudio, haciendo ejercicio regularmente.    
+                            <label>
+                                <input type="radio" name="p11" value="1" required> Si
+                            </label>
+                            <label>
+                                <input type="radio" name="p11" value="0"> No
+                            </label>
+                        </li>
+                        <li><strong>Pregunta 12:</strong> Cuando escucho una nueva idea en seguida comienzo a pensar cómo ponerla en práctica.   
+                            <label>
+                                <input type="radio" name="p12" value="1" required> Si
+                            </label>
+                            <label>
+                                <input type="radio" name="p12" value="0"> No
+                            </label>
+                        </li>
+                        <li><strong>Pregunta 13:</strong> Prefiero las ideas originales y novedosas aunque no sean prácticas.   
+                            <label>
+                                <input type="radio" name="p13" value="1" required> Si
+                            </label>
+                            <label>
+                                <input type="radio" name="p13" value="0"> No
+                            </label>
+                        </li>
+                        <li><strong>Pregunta 14:</strong> Admito y me ajusto a las normas sólo si me sirven para lograr mis objetivos.   
+                            <label>
+                                <input type="radio" name="p14" value="1" required> Si
+                            </label>
+                            <label>
+                                <input type="radio" name="p14" value="0"> No
+                            </label>
+                        </li>
+                        <li><strong>Pregunta 15:</strong> Normalmente encajo bien con personas reflexivas, analíticas y me cuesta sintonizar con personas demasiado espontáneas, imprevisibles.   
+                            <label>
+                                <input type="radio" name="p15" value="1" required> Si
+                            </label>
+                            <label>
+                                <input type="radio" name="p15" value="0"> No
+                            </label>
+                        </li>
+			            <li><strong>Pregunta 16:</strong> Escucho con más frecuencia que hablo.   
+                            <label>
+                                <input type="radio" name="p16" value="1" required> Si
+                            </label>
+                            <label>
+                                <input type="radio" name="p16" value="0"> No
+                            </label>
+                        </li>
+                        <li><strong>Pregunta 17:</strong> Prefiero las cosas estructuradas a las desordenadas.  
+                            <label>
+                                <input type="radio" name="p17" value="1" required> Si
+                            </label>
+                            <label>
+                                <input type="radio" name="p17" value="0"> No
+                            </label>
+                        </li>
+                        <li><strong>Pregunta 18:</strong> Cuando poseo cualquier información, trato de interpretarla bien antes de manifestar alguna conclusión.   
+                            <label>
+                                <input type="radio" name="p18" value="1" required> Si
+                            </label>
+                            <label>
+                                <input type="radio" name="p18" value="0"> No
+                            </label>
+                        </li>
+                        <li><strong>Pregunta 19:</strong> Antes de tomar una decisión estudio con cuidado sus ventajas e inconvenientes.   
+                            <label>
+                                <input type="radio" name="p19" value="1" required> Si
+                            </label>
+                            <label>
+                                <input type="radio" name="p19" value="0"> No
+                            </
+                        </li>
+                        <li><strong>Pregunta 20:</strong> Estoy dispuesto a escuchar ideas diferentes a las mías, aunque a veces me cueste.   
+                            <label>
+                                <input type="radio" name="p20" value="1" required> Si
+                            </label>
+                            <label>
+                                <input type="radio" name="p20" value="0"> No
+                            </label>
+                        </li>
+                    </ul>
+                </div>
+
+                <div id="tab3" class="tabcontent">
+                    <ul>
+                        <li><strong>Pregunta 21:</strong> Casi siempre procuro ser coherente con mis criterios y sistemas de valores. Tengo principios y los sigo.    
+                            <label>
+                                <input type="radio" name="p21" value="1" required> Si
+                            </label>
+                            <label>
+                                <input type="radio" name="p21" value="0"> No
+                            </label>
+                        </li>
+                        <li><strong>Pregunta 22:</strong> Cuando hay una discusión no me gusta ir con rodeos.      
+                            <label>
+                                <input type="radio" name="p22" value="1" required> Si
+                            </label>
+                            <label>
+                                <input type="radio" name="p22" value="0"> No
+                            </label>
+                        </li>
+                        <li><strong>Pregunta 23:</strong> Me disgusta implicarme afectivamente en mi ambiente de trabajo. Prefiero mantener relaciones distantes.   
+                            <label>
+                                <input type="radio" name="p23" value="1" required> Si
+                            </label>
+                            <label>
+                                <input type="radio" name="p23" value="0"> No
+                            </label>
+                        </li>
+                        <li><strong>Pregunta 24:</strong> Me gustan más las personas realistas y concretas que las teóricas.   
+                            <label>
+                                <input type="radio" name="p24" value="1" required> Si
+                            </label>
+                            <label>
+                                <input type="radio" name="p24" value="0"> No
+                            </label>
+                        </li>
+                        <li><strong>Pregunta 25:</strong> Me cuesta ser creativo/a, romper estructuras.   
+                            <label>
+                                <input type="radio" name="p25" value="1" required> Si
+                            </label>
+                            <label>
+                                <input type="radio" name="p25" value="0"> No
+                            </label>
+                        </li>
+                        <li><strong>Pregunta 26:</strong> Me siento a gusto con personas espontáneas y divertidas.   
+                            <label>
+                                <input type="radio" name="p26" value="1" required> Si
+                            </label>
+                            <label>
+                                <input type="radio" name="p26" value="0"> No
+                            </label>
+                        </li>
+                        <li><strong>Pregunta 27:</strong> La mayoría de las veces expreso abiertamente cómo me siento.   
+                            <label>
+                                <input type="radio" name="p27" value="1" required> Si
+                            </label>
+                            <label>
+                                <input type="radio" name="p27" value="0"> No
+                            </label>
+                        </li>
+                        <li><strong>Pregunta 28:</strong> Me gusta analizar y dar vueltas a las cosas.   
+                            <label>
+                                <input type="radio" name="p28" value="1" required> Si
+                            </label>
+                            <label>
+                                <input type="radio" name="p28" value="0"> No
+                            </label>
+                        </li>
+                        <li><strong>Pregunta 29:</strong> Me molesta que la gente no se tome en serio las cosas.   
+                            <label>
+                                <input type="radio" name="p29" value="1" required> Si
+                            </label>
+                            <label>
+                                <input type="radio" name="p29" value="0"> No
+                            </label>
+                        </li>
+                        <li><strong>Pregunta 30:</strong> Me atrae experimentar y practicar las últimas técnicas y novedades.   
+                            <label>
+                                <input type="radio" name="p30" value="1" required> Si
+                            </label>
+                            <label>
+                                <input type="radio" name="p30" value="0"> No
+                            </label>
+                        </li>
+                    </ul>
+                </div>        
+
+                <div id="tab4" class="tabcontent">
+                    <ul>
+                        
+                        <li><strong>Pregunta 31:</strong> Soy cauteloso/a a la hora de sacar conclusiones.    
+                            <label>
+                                <input type="radio" name="p31" value="1" required> Si
+                            </label>
+                            <label>
+                                <input type="radio" name="p31" value="0"> No
+                            </label>
+                        </li>
+                        <li><strong>Pregunta 32:</strong> Prefiero contar con el mayor número de fuentes de información. Cuantos más datos reúna para reflexionar, mejor.    
+                            <label>
+                                <input type="radio" name="p32" value="1" required> Si
+                            </label>
+                            <label>
+                                <input type="radio" name="p32" value="0"> No
+                            </label>
+                        </li>
+                        <li><strong>Pregunta 33:</strong> Tiendo a ser perfeccionista.   
+                            <label>
+                                <input type="radio" name="p33" value="1" required> Si
+                            </label>
+                            <label>
+                                <input type="radio" name="p33" value="0"> No
+                            </label>
+                        </li>
+                        <li><strong>Pregunta 34:</strong> Prefiero oír las opiniones de los demás antes de exponer la mía.   
+                            <label>
+                                <input type="radio" name="p34" value="1" required> Si
+                            </label>
+                            <label>
+                                <input type="radio" name="p34" value="0"> No
+                            </label>
+                        </li>
+                        <li><strong>Pregunta 35:</strong> Me gusta afrontar la vida espontáneamente y no tener que planificar todo previamente.  
+                            <label>
+                                <input type="radio" name="p35" value="1" required> Si
+                            </label>
+                            <label>
+                                <input type="radio" name="p35" value="0"> No
+                            </label>
+                        </li>
+                        <li><strong>Pregunta 36:</strong> En las discusiones me gusta observar cómo actúan los demás participantes.   
+                            <label>
+                                <input type="radio" name="p36" value="1" required> Si
+                            </label>
+                            <label>
+                                <input type="radio" name="p36" value="0"> No
+                            </label>
+                        </li>
+                        <li><strong>Pregunta 37:</strong> Me siento incómodo con las personas calladas y demasiado analíticas.   
+                            <label>
+                                <input type="radio" name="p37" value="1" required> Si
+                            </label>
+                            <label>
+                                <input type="radio" name="p37" value="0"> No
+                            </label>
+                        </li>
+                        <li><strong>Pregunta 38:</strong> Juzgo con frecuencia las ideas de los demás por su valor práctico.      
+                            <label>
+                                <input type="radio" name="p38" value="1" required> Si
+                            </label>
+                            <label>
+                                <input type="radio" name="p38" value="0"> No
+                            </label>
+                        </li>
+                        <li><strong>Pregunta 39:</strong> Me agobio si me obligan a acelerar mucho el trabajo para cumplir un plazo.   
+                            <label>
+                                <input type="radio" name="p39" value="1" required> Si
+                            </label>
+                            <label>
+                                <input type="radio" name="p39" value="0"> No
+                            </label>
+                        </li>
+                        <li><strong>Pregunta 40:</strong> En las reuniones apoyo las ideas prácticas y realistas.   
+                            <label>
+                                <input type="radio" name="p40" value="1" required> Si
+                            </label>
+                            <label>
+                                <input type="radio" name="p40" value="0"> No
+                            </label>
+                        </li>     
+                    </ul>
+                </div>   
+
+                <div id="tab5" class="tabcontent">
+                    <ul>
+                        <li><strong>Pregunta 41:</strong> Es mejor gozar del momento presente que deleitarse pensando en el pasado o en el futuro.    
+                            <label>
+                                <input type="radio" name="p41" value="1" required> Si
+                            </label>
+                            <label>
+                                <input type="radio" name="p41" value="0"> No
+                            </label>
+                        </li>
+                        <li><strong>Pregunta 42:</strong> Me molestan las personas que siempre desean apresurar las cosas.   
+                            <label>
+                                <input type="radio" name="p42" value="1" required> Si
+                            </label>
+                            <label>
+                                <input type="radio" name="p42" value="0"> No
+                            </label>
+                        </li>
+                        <li><strong>Pregunta 43:</strong> Aporto ideas nuevas y espontáneas en los grupos de discusión.   
+                            <label>
+                                <input type="radio" name="p43" value="1" required> Si
+                            </label>
+                            <label>
+                                <input type="radio" name="p43" value="0"> No
+                            </label>
+                        </li>
+                        <li><strong>Pregunta 44:</strong> Pienso que son más consistentes las decisiones fundamentadas en un minucioso análisis que las basadas en la intuición.  
+                            <label>
+                                <input type="radio" name="p44" value="1" required> Si
+                            </label>
+                            <label>
+                                <input type="radio" name="p44" value="0"> No
+                            </label>
+                        </li>
+                        <li><strong>Pregunta 45:</strong> Detecto frecuentemente la inconsistencia y puntos débiles en las argumentaciones de los demás.   
+                            <label>
+                                <input type="radio" name="p45" value="1" required> Si
+                            </label>
+                            <label>
+                                <input type="radio" name="p45" value="0"> No
+                            </label>
+                        </li>
+                        <li><strong>Pregunta 46:</strong> Creo que es preciso saltarse las normas muchas más veces que cumplirlas.    
+                            <label>
+                                <input type="radio" name="p46" value="1" required> Si
+                            </label>
+                            <label>
+                                <input type="radio" name="p46" value="0"> No
+                            </label>
+                        </li>
+                        <li><strong>Pregunta 47:</strong> A menudo caigo en la cuenta de otras formas mejores y más prácticas de hacer las cosas.   
+                            <label>
+                                <input type="radio" name="p47" value="1" required> Si
+                            </label>
+                            <label>
+                                <input type="radio" name="p47" value="0"> No
+                            </label>
+                        </li>
+                        <li><strong>Pregunta 48:</strong> En conjunto hablo más que escucho.   
+                            <label>
+                                <input type="radio" name="p48" value="1" required> Si
+                            </label>
+                            <label>
+                                <input type="radio" name="p48" value="0"> No
+                            </label>
+                        </li>
+                        <li><strong>Pregunta 49:</strong> Prefiero distanciarme de los hechos y observarlos desde otras perspectivas.       
+                            <label>
+                                <input type="radio" name="p49" value="1" required> Si
+                            </label>
+                            <label>
+                                <input type="radio" name="p49" value="0"> No
+                            </label>
+                        </li>
+                        <li><strong>Pregunta 50:</strong> Estoy convencido/a que debe imponerse la lógica y el razonamiento.    
+                            <label>
+                                <input type="radio" name="p50" value="1" required> Si
+                            </label>
+                            <label>
+                                <input type="radio" name="p50" value="0"> No
+                            </label>
+                        </li>
+                    </ul>
+                </div>
+
+                <div id="tab6" class="tabcontent">
+                    <ul>
+                        <li><strong>Pregunta 51:</strong> Me gusta buscar nuevas experiencias.    
+                            <label>
+                                <input type="radio" name="p51" value="1" required> Si
+                            </label>
+                            <label>
+                                <input type="radio" name="p51" value="0"> No
+                            </label>
+                        </li>
+                        <li><strong>Pregunta 52:</strong> Me gusta experimentar y aplicar las cosas.    
+                            <label>
+                                <input type="radio" name="p52" value="1" required> Si
+                            </label>
+                            <label>
+                                <input type="radio" name="p52" value="0"> No
+                            </label>
+                        </li>
+                        <li><strong>Pregunta 53:</strong> Pienso que debemos llegar pronto al grano, al meollo de los temas.    
+                            <label>
+                                <input type="radio" name="p53" value="1" required> Si
+                            </label>
+                            <label>
+                                <input type="radio" name="p53" value="0"> No
+                            </label>
+                        </li>
+                        <li><strong>Pregunta 54:</strong> Siempre trato de conseguir conclusiones e ideas claras.   
+                            <label>
+                                <input type="radio" name="p54" value="1" required> Si
+                            </label>
+                            <label>
+                                <input type="radio" name="p54" value="0"> No
+                            </label>
+                        </li>
+                        <li><strong>Pregunta 55:</strong> Prefiero discutir cuestiones concretas y no perder el tiempo con charlas vacías.   
+                            <label>
+                                <input type="radio" name="p55" value="1" required> Si
+                            </label>
+                            <label>
+                                <input type="radio" name="p55" value="0"> No
+                            </label>
+                        </li>
+                        <li><strong>Pregunta 56:</strong> Me impaciento con las argumentaciones irrelevantes e incoherentes en las reuniones.
+                            <label>
+                                <input type="radio" name="p56" value="1" required> Si
+                            </label>
+                            <label>
+                                <input type="radio" name="p56" value="0"> No
+                            </label>
+                        </li>
+                        <li><strong>Pregunta 57:</strong> Compruebo antes si las cosas funcionan realmente.     
+                            <label>
+                                <input type="radio" name="p57" value="1" required> Si
+                            </label>
+                            <label>
+                                <input type="radio" name="p57" value="0"> No
+                            </label>
+                        </li>
+                        <li><strong>Pregunta 58:</strong> Hago varios borradores antes de la redacción definitiva de un trabajo.  
+                            <label>
+                                <input type="radio" name="p58" value="1" required> Si
+                            </label>
+                            <label>
+                                <input type="radio" name="p58" value="0"> No
+                            </label>
+                        </li>
+                        <li><strong>Pregunta 59:</strong> Soy consciente de que en las discusiones ayudo a los demás a mantenerse centrados en el tema, evitando divagaciones.   
+                            <label>
+                                <input type="radio" name="p59" value="1" required> Si
+                            </label>
+                            <label>
+                                <input type="radio" name="p59" value="0"> No
+                            </label>
+                        </li>
+                        <li><strong>Pregunta 60:</strong> Observo que, con frecuencia, soy uno de los más objetivos y desapasionados en las discusiones.   
+                            <label>
+                                <input type="radio" name="p60" value="1" required> Si
+                            </label>
+                            <label>
+                                <input type="radio" name="p60" value="0"> No
+                            </label>
+                        </li>
+                    </ul>
+                </div>
+
+                <div id="tab7" class="tabcontent">
+                    <ul>
+                        <li><strong>Pregunta 61:</strong> Cuando algo va mal, le quito importancia y trato de hacerlo mejor.    
+                            <label>
+                                <input type="radio" name="p61" value="1" required> Si
+                            </label>
+                            <label>
+                                <input type="radio" name="p61" value="0"> No
+                            </label>
+                        </li>  
+                        <li><strong>Pregunta 62:</strong> Rechazo ideas originales y espontáneas si no las veo prácticas.    
+                            <label>
+                                <input type="radio" name="p62" value="1" required> Si
+                            </label>
+                            <label>
+                                <input type="radio" name="p62" value="0"> No
+                            </label>
+                        </li>
+                        <li><strong>Pregunta 63:</strong> Me gusta sopesar diversas alternativas antes de tomar una decisión.   
+                            <label>
+                                <input type="radio" name="p63" value="1" required> Si
+                            </label>
+                            <label>
+                                <input type="radio" name="p63" value="0"> No
+                            </label>
+                        </li>  
+                        <li><strong>Pregunta 64:</strong> Con frecuencia miro hacia adelante para prever el futuro.   
+                            <label>
+                                <input type="radio" name="p64" value="1" required> Si
+                            </label>
+                            <label>
+                                <input type="radio" name="p64" value="0"> No
+                            </label>
+                        </li>
+                        <li><strong>Pregunta 65:</strong> En los debates prefiero desempeñar un papel secundario antes que ser el líder o el que más participa.
+                            <label>
+                                <input type="radio" name="p65" value="1" required> Si
+                            </label>
+                            <label>
+                                <input type="radio" name="p65" value="0"> No
+                            </label>
+                        </li>  
+                        <li><strong>Pregunta 66:</strong> Me molestan las personas que no siguen un enfoque lógico.   
+                            <label>
+                                <input type="radio" name="p66" value="1" required> Si
+                            </label>
+                            <label>
+                                <input type="radio" name="p66" value="0"> No
+                            </label>
+                        </li>
+                        <li><strong>Pregunta 67:</strong> Me resulta incómodo tener que planificar y prever las cosas.    
+                            <label>
+                                <input type="radio" name="p67" value="1" required> Si
+                            </label>
+                            <label>
+                                <input type="radio" name="p67" value="0"> No
+                            </label>
+                        </li>  
+                        <li><strong>Pregunta 68:</strong> Creo que el fin justifica los medios en muchos casos.   
+                            <label>
+                                <input type="radio" name="p68" value="1" required> Si
+                            </label>
+                            <label>
+                                <input type="radio" name="p68" value="0"> No
+                            </label>
+                        </li>
+                        <li><strong>Pregunta 69:</strong> Suelo reflexionar sobre los asuntos y problemas.    
+                            <label>
+                                <input type="radio" name="p69" value="1" required> Si
+                            </label>
+                            <label>
+                                <input type="radio" name="p69" value="0"> No
+                            </label>
+                        </li>  
+                        <li><strong>Pregunta 70:</strong> El trabajar a conciencia me llena de satisfacción y orgullo.   
+                            <label>
+                                <input type="radio" name="p70" value="1" required> Si
+                            </label>
+                            <label>
+                                <input type="radio" name="p70" value="0"> No
+                            </label>
+                        </li>
+                    </ul>
+                </div>
+
+                <div id="tab8" class="tabcontent">
+                    <ul>
+                        <li><strong>Pregunta 71:</strong> Ante los acontecimientos trato de descubrir los principios y teorías en que se basan.   
+                            <label>
+                                <input type="radio" name="p71" value="1" required> Si
+                            </label>
+                            <label>
+                                <input type="radio" name="p71" value="0"> No
+                            </label>
+                        </li>  
+                        <li><strong>Pregunta 72:</strong> Con tal de conseguir el objetivo que pretendo soy capaz de herir sentimientos ajenos.   
+                            <label>
+                                <input type="radio" name="p72" value="1" required> Si
+                            </label>
+                            <label>
+                                <input type="radio" name="p72" value="0"> No
+                            </label>
+                        </li>
+                        <li><strong>Pregunta 73:</strong> No me importa hacer todo lo necesario para que sea efectivo mi trabajo.   
+                            <label>
+                                <input type="radio" name="p73" value="1" required> Si
+                            </label>
+                            <label>
+                                <input type="radio" name="p73" value="0"> No
+                            </label>
+                        </li>  
+                        <li><strong>Pregunta 74:</strong> Con frecuencia soy una de las personas que más anima las fiestas.   
+                            <label>
+                                <input type="radio" name="p74" value="1" required> Si
+                            </label>
+                            <label>
+                                <input type="radio" name="p74" value="0"> No
+                            </label>
+                        </li>
+                        <li><strong>Pregunta 75:</strong> Me aburro enseguida con el trabajo metódico y minucioso.
+                            <label>
+                                <input type="radio" name="p75" value="1" required> Si
+                            </label>
+                            <label>
+                                <input type="radio" name="p75" value="0"> No
+                            </label>
+                        </li>  
+                        <li><strong>Pregunta 76:</strong> La gente con frecuencia cree que soy poco sensible a sus sentimientos.   
+                            <label>
+                                <input type="radio" name="p76" value="1" required> Si
+                            </label>
+                            <label>
+                                <input type="radio" name="p76" value="0"> No
+                            </label>
+                        </li>
+                        <li><strong>Pregunta 77:</strong> Suelo dejarme llevar por mis intuiciones.   
+                            <label>
+                                <input type="radio" name="p77" value="1" required> Si
+                            </label>
+                            <label>
+                                <input type="radio" name="p77" value="0"> No
+                            </label>
+                        </li>  
+                        <li><strong>Pregunta 78:</strong> Si trabajo en grupo procuro que se siga un método y un orden.   
+                            <label>
+                                <input type="radio" name="p78" value="1" required> Si
+                            </label>
+                            <label>
+                                <input type="radio" name="p78" value="0"> No
+                            </label>
+                        </li>
+                        <li><strong>Pregunta 79:</strong> Con frecuencia me interesa averiguar lo que piensa la gente.   
+                            <label>
+                                <input type="radio" name="p79" value="1" required> Si
+                            </label>
+                            <label>
+                                <input type="radio" name="p79" value="0"> No
+                            </label>
+                        </li>  
+                        <li><strong>Pregunta 80:</strong> Esquivo los temas subjetivos, ambiguos y poco claros.
+                            <label>
+                                <input type="radio" name="p80" value="1" required> Si
+                            </label>
+                            <label>
+                                <input type="radio" name="p80" value="0"> No
+                            </label>
+                        </li>
+                    </ul>               
+                </div>
+            </div>
+        </div>
+        <div style="margin-top: 20px;">
+            <a href="{% url 'testdos' %}">
+                <button style="padding: 10px 20px; background-color: #007BFF; color: white; border: none; border-radius: 5px; display: block; margin-left: 0;">Continuar al Test</button>
+            </a>
+        </div>
+        <!--<input type="submit" value="Enviar Respuestas" class="btn btn-primary"> -->
+    </form>
+</div>
+
+<style>
+    /* Estilos para las pestañas */
+    .tabcontent {
+        display: none;
+        padding: 20px;
+    }
+
+    .tablinks {
+        background-color: #f1f1f1;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        padding: 10px 15px;
+        font-size: 16px;
+    }
+
+    .tablinks:hover {
+        background-color: #ddd;
+    }
+
+    .tablinks:focus {
+        background-color: #ddd;
+    }
+
+    .tablinks.active {
+        background-color: purple; /* Color morado para el botón seleccionado */
+        color: white; /* Color de texto blanco */
+    }
+
+    /* Ajustes para las preguntas en negrita */
+    strong {
+        font-weight: bold;
+    }
+</style>
+
+<script>
+    function openTab(evt, tabName) {
+        // Ocultar todas las pestañas
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+
+        // Remover la clase "active" de todos los botones
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+
+        // Mostrar la pestaña actual y añadir "active" al botón correspondiente
+        document.getElementById(tabName).style.display = "block";
+        evt.currentTarget.className += " active";
+    }
+
+    // Abrir la primera pestaña por defecto
+    document.getElementById("defaultOpen").click();
+</script>
+
+{% endblock %}

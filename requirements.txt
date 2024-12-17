@@ -1,0 +1,9 @@
+Django==5.1.4
+openpyxl
+numpy<1.25
+pandas
+opencv-python
+tf-keras
+tensorflow
+chartkick
+deepface

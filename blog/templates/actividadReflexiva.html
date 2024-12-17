@@ -1,0 +1,189 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Actividad Reflexiva</title>
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-image: url("{% static 'blog/fondo2.png' %}");
+            background-size: cover; /* Mantiene la imagen proporcionada y cubre la pantalla */
+            background-position: center; /* Centra la imagen */
+            background-attachment: fixed; /* La imagen permanece fija al hacer scroll */
+            font-family: 'Source Sans Pro', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 20px 0;
+            text-align: center;
+            color: #ffffff;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 36px;
+        }
+        header h2 {
+            margin: 10px 0;
+            font-size: 24px;
+        }
+        .nav-right {
+            float: right;
+            margin-top: 20px;
+            margin-right: 20px;
+        }
+        .nav-right a {
+            color: #ffffff;
+            background-color: #007bff;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .nav-right a:hover {
+            background-color: #0056b3;
+        }
+        .content {
+            padding: 20px;
+            text-align: center;
+        }
+        .image-section {
+            margin-bottom: 30px;
+        }
+        .image-section img {
+            max-width: 90%;
+            height: auto;
+            border-radius: 10px;
+        }
+        label {
+            font-weight: bold;
+            font-size: 1.2em; /* Aumenta el tamaño de la fuente del label */
+            display: block;
+            margin-bottom: 10px;
+        }
+        .form-control {
+            margin-bottom: 20px;
+            width: 90%; /* Aumenta el ancho del campo de texto */
+            margin-left: auto;
+            margin-right: auto;
+            font-size: 1.2em; /* Aumenta el tamaño de la fuente del input */
+            padding: 15px; /* Aumenta el padding del campo de texto */
+        }
+        button {
+            margin-top: 20px;
+            width: 100%; /* Asegura que el botón ocupe todo el ancho */
+        }
+        .btn-finalizar {
+            background-color: #007bff; /* Color del botón finalizar */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            font-size: 1.2em;
+            cursor: pointer;
+        }
+        .btn-finalizar:hover {
+            background-color: #0056b3; /* Color al pasar el ratón */
+        }
+        .btn-siguiente {
+            background-color: purple; /* Color del botón siguiente actividad */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            font-size: 1.2em;
+            cursor: pointer;
+            display: block; /* Asegura que el botón sea un bloque */
+            margin-top: 10px; /* Espacio superior opcional */
+        }
+        .btn-siguiente:hover {
+            background-color: darkviolet; /* Color al pasar el ratón */
+        }
+        .alert {
+            display: none;
+            margin-bottom: 20px;
+            color: #721c24;
+            background-color: #f8d7da;
+            border-color: #f5c6cb;
+            border-radius: 5px;
+            padding: 10px;
+            font-size: 1.2em;
+        }
+        .alert.show {
+            display: block;
+        }
+        .text-center {
+            text-align: center; /* Asegura que el contenido esté centrado */
+            margin-top: 20px; /* Espacio superior opcional */
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+        <div class="image-section">
+            <img src="{% static 'blog/historia_reflexiva.png' %}" alt="Historia Reflexiva">
+        </div>
+
+        <form id="formulario">
+            <div class="form-group">
+                <label for="pregunta1">¿Cómo ha mejorado la tecnología tu vida? ¿Te ayuda con tus tareas, a comunicarte con amigos o a disfrutar de tus pasatiempos? Comparte tu respuesta aquí 👇🏼</label>
+                <input type="text" class="form-control" id="pregunta1" name="pregunta1" placeholder="Escribe tu respuesta aquí">
+            </div>
+
+            <div id="mensaje" class="alert">
+                Espacio no respondido.
+            </div>
+
+            <button type="button" class="btn-finalizar" id="btn-finalizar" onclick="guardarRespuestas()">FINALIZAR</button>
+        </form>
+        <button type="button" class="btn-siguiente" id="btn-continuar" onclick="continuar()" style="display: none;">Siguiente Actividad</button>
+        <!-- Nuevo contenedor para mostrar APT2 -->
+        <div class="actividad-siguiente">
+            <p>La siguiente actividad es: <strong>{{ Test_VARK }}</strong></p>
+        </div>
+    </div>
+
+    <script>
+        function guardarRespuestas() {
+            var pregunta1 = document.getElementById('pregunta1').value;
+            var mensaje = document.getElementById('mensaje');
+            var btnFinalizar = document.getElementById('btn-finalizar');
+            var btnContinuar = document.getElementById('btn-continuar');
+
+            if (pregunta1.trim() === "") {
+                mensaje.classList.add('show');
+            } else {
+                mensaje.classList.remove('show');
+                console.log("Pregunta 1:", pregunta1);
+                // Aquí podrías añadir código para enviar las respuestas al servidor si fuera necesario.
+                btnFinalizar.style.display = 'none'; // Ocultar botón FINALIZAR
+                btnContinuar.style.display = 'block'; // Mostrar botón Siguiente Actividad
+                document.getElementById('pregunta1').disabled = true; // Deshabilitar campo de texto
+            }
+        }
+
+        function continuar() {
+            // Lógica para redirigir a la actividad correspondiente
+            let APT2 = "{{ Test_VARK }}"; // Suponiendo que APT2 se asigna en el contexto de Django
+            let url = "";
+            if (APT2 === "Visual") {
+                url = "{% url 'actividadVisual' %}";
+            } else if (APT2 === "Auditivo") {
+                url = "{% url 'actividadAuditivo' %}";
+            } else if (APT2 === "Escrito") {
+                url = "{% url 'actividadLE' %}";
+            } else if (APT2 === "Kinestésico") {
+                url = "{% url 'actividadKinestesico' %}";
+            } else {
+                alert("No se ha encontrado una actividad sugerida para APT2.");
+                return; // Salir de la función si no hay actividad
+            }
+
+            // Redirigir al enlace correspondiente
+            window.location.href = url;
+        }
+    </script>
+{% endblock %}

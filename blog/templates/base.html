@@ -1,0 +1,120 @@
+<!-- templates/base.html -->
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asistente Virtual para el Reconocimiento de Estilos de Aprendizaje</title>
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400" rel="stylesheet">
+    <link href="{% static 'css/base.css' %}" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-image: url("{% static 'blog/fondo2.png' %}");
+            background-size: cover; /* Mantiene la imagen proporcionada y cubre la pantalla */
+            background-position: center; /* Centra la imagen */
+            background-attachment: fixed; /* La imagen permanece fija al hacer scroll */
+            font-family: 'Source Sans Pro', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 20px 0;
+            text-align: center;
+            color: #ffffff;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 36px;
+        }
+        header h2 {
+            margin: 10px 0;
+            font-size: 24px;
+        }
+        .nav-right {
+            float: right;
+            margin-top: 20px;
+            margin-right: 20px;
+        }
+        .nav-right a {
+            color: #ffffff;
+            background-color: #007bff;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        
+        .nav-left-bt {
+            float: left;
+            margin-top: 20px;
+            margin-left: 20px;
+        }
+        .nav-right a:hover {
+            background-color: #0056b3;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+         /* Estilos del botón */
+        .start-btn {
+            background-color: #007BFF; /* Fondo azul */
+            color: white;
+            padding: 15px 30px;
+            font-size: 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 30px;
+            transition: background-color 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="nav-left">
+                <h1><a href="{% url 'home' %}" style="color: #ffffff;">AVREA</a></h1>
+                <h2>Asistente Virtual para el Reconocimiento de Emociones en Estilos de Aprendizaje</h2>
+            </div>
+            <div class="nav-left-bt">
+            {% if user.is_staff %}
+		    <a href="{% url 'charts' %}">
+		        <button type="submit" style="color: #ffffff; background-color: #007bff; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">Ver estadísticas</button>
+		    </a>
+		{% endif %}
+            </div>
+            <div class="nav-right">
+            	
+                {% if user.is_authenticated %}
+                   <form action="{% url 'logout' %}" method="post" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" style="color: #ffffff; background-color: #007bff; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">
+                            Cerrar Sesión
+                        </button>
+                    </form>
+                    <form action="{% url 'login' %}" method="post" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" style="color: #ffffff; background-color: #007bff; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">
+                            Ir a inicio
+                        </button>
+                    </form>
+                    
+                {% else %}
+                    <a href="{% url 'login' %}">Iniciar Sesión</a>
+                    <a href="{% url 'registro' %}">Registrarse</a>
+                {% endif %}
+            </div>
+        </div>
+    </header>
+    <div class="container">
+        {% block content %}
+        {% endblock %}
+    </div>
+</body>
+</html>
+

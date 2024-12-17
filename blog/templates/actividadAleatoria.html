@@ -1,0 +1,266 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Actividad Aleatoria</title>
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-image: url("{% static 'blog/fondo2.png' %}");
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            font-family: 'Source Sans Pro', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 20px 0;
+            text-align: center;
+            color: #ffffff;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 36px;
+        }
+        header h2 {
+            margin: 10px 0;
+            font-size: 24px;
+        }
+        .contenedor {
+            margin: 0 auto;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+        }
+        .blue-box {
+            background-color: #0056b3;
+            color: white;
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            font-size: 1.2rem;
+            text-align: center;
+        }
+        .text-draggable, .droppable, .draggable img {
+            width: 100%;
+            height: 150px; /* Tamaño ajustado */
+            margin: 10px 0;
+            border: 2px solid #0056b3; /* Bordes azules */
+            border-radius: 5px;
+            text-align: center;
+            padding: 10px;
+            display: flex; /* Para centrar el contenido */
+            align-items: center;
+            justify-content: center;
+        }
+        .droppable {
+            border: 2px dashed #0056b3; /* Bordes azules */
+            background-color: #e0f7fa; /* Fondo azul claro */
+            color: #0056b3;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            height: 150px; /* Tamaño ajustado */
+        }
+        .info-box {
+            background-color: #0056b3;
+            color: white;
+            padding: 10px;
+            margin-top: 20px;
+            border-radius: 5px;
+            text-align: justify;
+            font-size: 0.9rem;
+        }
+        .btn-finalizar, .btn-continuar, .btn-detener {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .btn-finalizar:hover, .btn-continuar:hover, .btn-detener:hover {
+            background-color: #0056b3;
+        }
+        .static-container {
+            text-align: center;
+            margin: 10px 0;
+            font-size: 1.2rem;
+            color: #00796b;
+        }
+        .correct {
+            background-color: #c8e6c9; /* Color verde claro para respuesta correcta */
+            border-color: #388e3c; /* Borde verde oscuro */
+        }
+        .incorrect {
+            background-color: #ffcdd2; /* Color rojo claro para respuesta incorrecta */
+            border-color: #d32f2f; /* Borde rojo oscuro */
+        }
+    </style>
+</head>
+<body>
+    <div class="static-container">
+        Intentos restantes: <span id="attempts-count">1</span>
+    </div>
+
+    <div class="contenedor container">
+        <div class="blue-box">
+            Arrastra la palabra correspondiente al contenedor adecuado:
+        </div>
+
+        <div class="info-box">
+            <p>Escucha o lee las pistas y arrastra la palabra al bloque que más coincide con la imagen.</p>
+            <div>
+                <button class="btn btn-primary btn-pista" onclick="mostrarPista(1)">Pista 1</button>
+                <button class="btn btn-primary btn-pista" onclick="mostrarPista(2)">Pista 2</button>
+                <button class="btn btn-primary btn-pista" onclick="mostrarPista(3)">Pista 3</button>
+                <button class="btn btn-primary btn-pista" onclick="reproducirAudio('audio4')">Audio 1</button>
+                <button class="btn btn-primary btn-pista" onclick="reproducirAudio('audio5')">Audio 2</button>
+                <button class="btn btn-primary btn-pista" onclick="reproducirAudio('audio6')">Audio 3</button>
+                <button class="btn-detener" onclick="detenerAudio()">Detener Audio</button> <!-- Botón para detener el audio -->
+            </div>
+        </div>
+
+
+        <audio id="audio4" src="{% static 'blog/sonido3.mp3' %}"></audio>
+        <audio id="audio5" src="{% static 'blog/sonido5.mp3' %}"></audio>
+        <audio id="audio6" src="{% static 'blog/sonido6.mp3' %}"></audio>
+
+
+        <div class="row">
+            <div class="col-md-4">
+                <div class="draggable">
+                    <img src="{% static 'blog/imagen5.png' %}" alt="Imagen 1">
+                </div>
+                <div class="draggable">
+                    <img src="{% static 'blog/imagen6.png' %}" alt="Imagen 2">
+                </div>
+                <div class="draggable">
+                    <img src="{% static 'blog/imagen7.png' %}" alt="Imagen 3">
+                </div>
+            </div>
+
+            <div class="col-md-4 text-container">
+                <div id="text1" class="text-draggable" draggable="true">Fuego</div>
+                <div id="text2" class="text-draggable" draggable="true">Rueda</div>
+                <div id="text3" class="text-draggable" draggable="true">Computador</div>
+            </div>
+
+            <div class="col-md-4">
+                <div id="drop1" class="droppable" data-correct="text1">Pista 1 y / o Audio 1</div>
+                <div id="drop2" class="droppable" data-correct="text2">Pista 2 y / o Audio 2</div>
+                <div id="drop3" class="droppable" data-correct="text3">Pista 3 y / o Audio 3</div>
+            </div>
+
+            <button id="btn-finalizar" class="btn-finalizar" onclick="finalizar()">Finalizar</button>
+            <button id="btn-continuar" class="btn-continuar" onclick="continuar()" style="display: none;">Siguiente Actividad</button>
+        </div>
+
+    </div>
+
+    <script>
+        let attempts = 1;
+
+        document.querySelectorAll('.text-draggable').forEach(item => {
+            item.addEventListener('dragstart', dragStart);
+        });
+
+        document.querySelectorAll('.droppable').forEach(item => {
+            item.addEventListener('dragover', dragOver);
+            item.addEventListener('drop', drop);
+        });
+
+        function dragStart(event) {
+            event.dataTransfer.setData('text/plain', event.target.id);
+        }
+
+        function dragOver(event) {
+            event.preventDefault();
+        }
+
+        function drop(event) {
+            event.preventDefault();
+            const draggableElementId = event.dataTransfer.getData('text');
+            const droppableElement = event.target;
+
+            if (!droppableElement.classList.contains('droppable') || droppableElement.querySelector('.text-draggable')) {
+                return;
+            }
+
+            const draggableElement = document.getElementById(draggableElementId);
+            droppableElement.appendChild(draggableElement);
+        }
+
+        function finalizar() {
+            // Ocultar el botón "Finalizar" y mostrar "Siguiente Actividad"
+            document.getElementById("btn-finalizar").style.display = "none";
+            document.getElementById("btn-continuar").style.display = "block";
+
+            // Verificar respuestas y cambiar color de los contenedores
+            document.querySelectorAll('.droppable').forEach(droppable => {
+                const correctTextId = droppable.dataset.correct;
+                const textElement = droppable.querySelector('.text-draggable');
+
+                if (textElement && textElement.id === correctTextId) {
+                    droppable.classList.add('correct');
+                    
+                } else {
+                    droppable.classList.add('incorrect');
+                }
+            });
+
+            // Deshabilitar arrastre
+            document.querySelectorAll('.text-draggable').forEach(item => {
+                item.setAttribute('draggable', 'false');
+            });
+
+            // Controlar intentos restantes
+            attempts--;
+            document.getElementById("attempts-count").textContent = attempts;
+
+            if (attempts <= 0) {
+                alert("Actividad Finalizada.");
+            }
+        }
+
+        function continuar() {
+            // Redireccionar a la siguiente actividad o sección
+            window.location.href = "{% url 'fin_actividad' %}";
+        }
+
+        function mostrarPista(pista) {
+            // Mostrar las pistas
+            if(pista==1){
+               alert("Pista 1 🔎:Permite cocinar alimentos, mejorando su digestión y sabor. "); 
+            }
+            if(pista==2){
+               alert("Pista 2 🔎: Invento clave para el transporte, eficiente en mover cargas. "); 
+            }
+            if(pista==3){
+               alert("Pista 3 🔎:Transforma el procesamiento y almacenamiento de información. "); 
+            }
+            
+        }
+
+        function reproducirAudio(audioId) {
+            const audio = document.getElementById(audioId);
+            audio.play();
+        }
+
+        function detenerAudio() {
+            const audios = document.querySelectorAll('audio');
+            audios.forEach(audio => {
+                audio.pause();
+                audio.currentTime = 0; // Reiniciar el audio
+            });
+        }
+    </script>
+{% endblock %}

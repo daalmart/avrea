@@ -1,0 +1,31 @@
+<!-- templates/test2.html -->
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <div style="background-color: rgba(255, 255, 255, 0.8); padding: 20px; border-radius: 10px;">
+        <h1>TEST 2 - Cuestionario VARK</h1>
+        <div style="display: flex; align-items: center;">
+            <div style="flex: 1; padding-right: 20px; color: black;">
+                <p>Hola, hoy vamos a aprender sobre los estilos de aprendizaje según el modelo VARK de Neil Fleming. Este modelo clasifica los estilos de aprendizaje en visual, auditivo, lector/escritor y kinestésico. Cada persona tiene preferencias diferentes para aprender, ¿quieres descubrir cuál es la tuya?</p>
+                <p>Los estilos de aprendizaje según VARK son:</p>
+                <ul>
+                    <li><strong>Visual:</strong> Prefieres aprender viendo imágenes o diagramas.</li>
+                    <li><strong>Auditivo:</strong> Aprendes mejor escuchando explicaciones o discusiones.</li>
+                    <li><strong>Lector/Escritor:</strong> Te sientes más cómodo leyendo o escribiendo.</li>
+                    <li><strong>Kinestésico:</strong> Aprendes mejor a través del movimiento y la experiencia práctica.</li>
+                </ul>
+                <p>Vamos a hacer un test con varias preguntas relacionadas con estos estilos de aprendizaje. Responde sinceramente, ¡y descubre más sobre tu forma de aprender!</p>
+            </div>
+            <div style="flex: 1;">
+                <img src="{% static 'blog/niños.png' %}" alt="Estilos de Aprendizaje" style="width: 100%; border-radius: 10px;">
+            </div>
+        </div>
+        <div style="margin-top: 20px;">
+            <a href="{% url 'testdos' %}">
+                <button style="padding: 10px 20px; background-color: #007BFF; color: white; border: none; border-radius: 5px; display: block; margin-left: 0;">Continuar al Test</button>
+            </a>
+        </div>
+    </div>
+{% endblock %}
+

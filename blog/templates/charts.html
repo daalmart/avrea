@@ -1,0 +1,292 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<style> 
+  .grid-container {
+  display: flex;
+  gap: 1px; /* Space between columns */
+}
+
+.column {
+  flex: 1; /* All columns will have equal width */
+  padding: 5px;
+  background-color: lightgray;
+  text-align: center;
+  padding: 10px;
+  border: 1px solid black;
+}
+
+</style>
+ <header>
+        <div class="container">
+            <h2>Resultados Estadísticos</h2>
+        </div>
+    </header>
+<div class="grid-container"> 
+	  <div id="container1" class="column">
+	    <h1>Estilos VARK</h1>
+	    <canvas id="pie-VARK"></canvas>
+	  </div>
+	   <div id="container2" class="column">
+	   <h1>Estilos CHAEA</h1>
+	    <canvas id="pie-CHAEA"></canvas>
+	  </div>
+ </div>
+ <div class="grid-container"> 
+	 <div id="container3" class="column">
+	   <h1>Emociones en actividad asociada a estilo: Caso CHAEA</h1>
+	    <canvas id="pie-EmosCHAEA"></canvas>
+	 </div>
+	 <div id="container4" class="column">
+	   <h1>Emociones en actividad asociada a estilo: Caso VARK</h1>
+	    <canvas id="pie-EmosVARK"></canvas>
+	 </div>
+
+</div>
+	 <div id="container5" class="column">
+	   <h1>Emociones en actividad aleatoria</h1>
+	    <canvas id="pie-EmosRand"></canvas>
+	 </div>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+  <script>
+
+    var configEmosCHAEA = {
+      type: 'doughnut',
+      data: {
+        datasets: [{
+          data: {{ emotionsCountCH|safe }},
+          backgroundColor: [
+      'rgb(255, 99, 132)',
+      'rgb(54, 162, 235)',
+      'rgb(255, 205, 86)',
+      'rgb(255, 153, 51)',
+      'rgb(102, 0, 204)',
+      'rgb(46, 204, 113)',
+    ],
+          
+          label: 'Emotions'
+        }],
+        labels: {{ emotions|safe }}
+      },
+      options: {
+        responsive: true
+      ,
+      animation: {
+      animateScale: true,
+      animateRotate: true
+    },
+    tooltips: {
+      callbacks: {
+        label: function(tooltipItem, data) {
+        	var dataset = data.datasets[tooltipItem.datasetIndex];
+          var total = dataset.data.reduce(function(previousValue, currentValue, currentIndex, array) {
+            return previousValue + currentValue;
+          });
+          var currentValue = dataset.data[tooltipItem.index];
+          var percentage = Math.floor(((currentValue/total) * 100)+0.5);         
+          return percentage + "%";
+        }
+      }
+    }
+    }
+    };
+
+   
+    </script>  
+    <script>
+
+    var configEmosVARK = {
+      type: 'doughnut',
+      data: {
+        datasets: [{
+          data: {{ emotionsCountVARK|safe }},
+          backgroundColor: [
+      'rgb(255, 99, 132)',
+      'rgb(54, 162, 235)',
+      'rgb(255, 205, 86)',
+      'rgb(255, 153, 51)',
+      'rgb(102, 0, 204)',
+      'rgb(46, 204, 113)',
+    ],
+          
+          label: 'Emotions'
+        }],
+        labels: {{ emotions|safe }}
+      },
+      options: {
+        responsive: true
+      ,
+      animation: {
+      animateScale: true,
+      animateRotate: true
+    },
+    tooltips: {
+      callbacks: {
+        label: function(tooltipItem, data) {
+        	var dataset = data.datasets[tooltipItem.datasetIndex];
+          var total = dataset.data.reduce(function(previousValue, currentValue, currentIndex, array) {
+            return previousValue + currentValue;
+          });
+          var currentValue = dataset.data[tooltipItem.index];
+          var percentage = Math.floor(((currentValue/total) * 100)+0.5);         
+          return percentage + "%";
+        }
+      }
+    }
+    }
+    };
+
+   
+    </script>  
+    
+    <script>
+
+    var configEmosRand = {
+      type: 'doughnut',
+      data: {
+        datasets: [{
+          data: {{ emotionsCountRand|safe }},
+          backgroundColor: [
+      'rgb(255, 99, 132)',
+      'rgb(54, 162, 235)',
+      'rgb(255, 205, 86)',
+      'rgb(255, 153, 51)',
+      'rgb(102, 0, 204)',
+      'rgb(46, 204, 113)',
+    ],
+          
+          label: 'Emotions'
+        }],
+        labels: {{ emotions|safe }}
+      },
+      options: {
+        responsive: true
+      ,
+      animation: {
+      animateScale: true,
+      animateRotate: true
+    },
+    tooltips: {
+      callbacks: {
+        label: function(tooltipItem, data) {
+        	var dataset = data.datasets[tooltipItem.datasetIndex];
+          var total = dataset.data.reduce(function(previousValue, currentValue, currentIndex, array) {
+            return previousValue + currentValue;
+          });
+          var currentValue = dataset.data[tooltipItem.index];
+          var percentage = Math.floor(((currentValue/total) * 100)+0.5);         
+          return percentage + "%";
+        }
+      }
+    }
+    }
+    };
+
+    
+    </script>
+    
+    <script>
+
+    var configCHAEA = {
+      type: 'doughnut',
+      data: {
+        datasets: [{
+          data: {{ profilesCHAEACount|safe }},
+          backgroundColor: [
+      'rgb(255, 99, 132)',
+      'rgb(54, 162, 235)',
+      'rgb(255, 205, 86)',
+      'rgb(255, 153, 51)',
+      'rgb(102, 0, 204)',
+      'rgb(46, 204, 113)',
+    ],
+          
+          label: 'Emotions'
+        }],
+        labels: {{ profilesCHAEA|safe }}
+      },
+      options: {
+        responsive: true
+      ,
+      animation: {
+      animateScale: true,
+      animateRotate: true
+    },
+    tooltips: {
+      callbacks: {
+        label: function(tooltipItem, data) {
+        	var dataset = data.datasets[tooltipItem.datasetIndex];
+          var total = dataset.data.reduce(function(previousValue, currentValue, currentIndex, array) {
+            return previousValue + currentValue;
+          });
+          var currentValue = dataset.data[tooltipItem.index];
+          var percentage = Math.floor(((currentValue/total) * 100)+0.5);         
+          return percentage + "%";
+        }
+      }
+    }
+    }
+    };
+
+    
+    </script>  
+         
+  <script>
+
+    var configVARK = {
+      type: 'doughnut',
+      data: {
+        datasets: [{
+          data: {{ profilesVARKCount|safe }},
+          backgroundColor: [
+      'rgb(255, 99, 132)',
+      'rgb(54, 162, 235)',
+      'rgb(255, 205, 86)',
+      'rgb(255, 153, 51)',
+      'rgb(102, 0, 204)',
+      'rgb(46, 204, 113)',
+    ],
+          
+        label: 'Emotions2'
+        }],
+        labels: {{ profilesVARK|safe }}
+      },
+      options: {
+        responsive: true
+      ,
+      animation: {
+      animateScale: true,
+      animateRotate: true
+    },
+    tooltips: {
+      callbacks: {
+        label: function(tooltipItem, data) {
+        	var dataset = data.datasets[tooltipItem.datasetIndex];
+          var total = dataset.data.reduce(function(previousValue, currentValue, currentIndex, array) {
+            return previousValue + currentValue;
+          });
+          var currentValue = dataset.data[tooltipItem.index];
+          var percentage = Math.floor(((currentValue/total) * 100)+0.5);         
+          return percentage + "%";
+        }
+      }
+    }
+    }
+    };
+
+    window.onload = function() {
+      var ctx1 = document.getElementById('pie-VARK').getContext('2d');
+      window.myPie1 = new Chart(ctx1, configVARK);
+      var ctx2 = document.getElementById('pie-CHAEA').getContext('2d');
+      window.myPie2 = new Chart(ctx2, configCHAEA);
+      var ctx3 = document.getElementById('pie-EmosCHAEA').getContext('2d');
+      window.myPie3 = new Chart(ctx3, configEmosCHAEA);
+      var ctx4 = document.getElementById('pie-EmosVARK').getContext('2d');
+      window.myPie3 = new Chart(ctx4, configEmosVARK);
+      var ctx5 = document.getElementById('pie-EmosRand').getContext('2d');
+      window.myPie3 = new Chart(ctx5, configEmosRand);
+    };
+
+  </script>
+
+{% endblock %}

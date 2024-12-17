@@ -1,0 +1,160 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juego de Ahorcado</title>
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-image: url("{% static 'blog/fondo2.png' %}");
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            font-family: 'Source Sans Pro', sans-serif;
+        }
+        header {
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 20px 0;
+            text-align: center;
+            color: #ffffff;
+        }
+        header h1, header h2 {
+            margin: 0;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        /* Contenedores con colores de fondo y transición */
+        .instruction-container, .audio-container, .text-container {
+            background-color: #007bff; /* Azul */
+            color: #ffffff;
+            padding: 20px; /* Aumentado para mayor espacio */
+            border-radius: 10px;
+            text-align: center;
+            margin-bottom: 20px;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        .instruction-container:hover, .audio-container:hover, .text-container:hover {
+            background-color: #6f42c1; /* Morado */
+            transform: scale(1.02);
+        }
+        /* Estilos de la barra de audio personalizada */
+        .audio-player {
+            width: 100%;
+            -webkit-appearance: none;
+            background: #007bff; /* Azul */
+            border-radius: 5px;
+            height: 20px; /* Aumentada la altura */
+            outline: none;
+            cursor: pointer;
+            margin-bottom: 15px; /* Aumentado espacio inferior */
+        }
+        .audio-player::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px; /* Aumentado el tamaño del "thumb" */
+            height: 20px; /* Aumentado el tamaño del "thumb" */
+            border-radius: 50%;
+            background: #ffffff; /* Blanco */
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .audio-player::-webkit-slider-thumb:hover {
+            background: #6f42c1; /* Morado al pasar el mouse */
+        }
+        .audio-player::-webkit-slider-runnable-track {
+            height: 20px; /* Aumentada la altura de la pista */
+            background: #007bff; /* Azul */
+            border-radius: 5px;
+        }
+        /* Estilos del botón Finalizar */
+        .finalizar-btn {
+            margin-top: 10px;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        .finalizar-btn:hover {
+            background-color: #28a745;
+            color: #ffffff;
+            transform: scale(1.1);
+        }
+        .finalizar-btn:disabled {
+            background-color: #d3d3d3;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Contenedor de instrucciones -->
+        <div class="instruction-container">
+            <h5>Reproduce el audio, escucha atentamente la historia de Pedra y responde las preguntas en el cajoncito de respuesta.</h5>
+        </div>
+
+        <!-- Contenedor de audio -->
+        <div class="audio-container">
+            <audio id="audio-player" src="{% static 'blog/audio4.mp3' %}" class="audio-player" controls></audio>
+            <div class="mt-3">
+                <button class="btn btn-primary" onclick="playAudio()">Reproducir</button>
+                <button class="btn btn-warning" onclick="pauseAudio()">Pausar</button>
+                <button class="btn btn-danger" onclick="restartAudio()">Reiniciar</button>
+                <button class="btn btn-info" onclick="retroceder10()">⏪ Retroceder 10s</button>
+                <button class="btn btn-info" onclick="adelantar10()">⏩ Adelantar 10s</button>
+            </div>
+        </div>
+
+        <!-- Contenedor de texto -->
+        <div class="text-container">
+            <h5>¿Cómo ha mejorado la tecnología tu vida? ¿Te ayuda con tus tareas, a comunicarte con amigos o a disfrutar de tus pasatiempos? Comparte tu respuesta aquí 👇🏼:</h5>
+            <textarea class="form-control" rows="5" placeholder="Escribe algo aquí..." oninput="toggleFinalizarButton()"></textarea>
+        </div>
+
+        <!-- Botón Finalizar -->
+        <button class="btn btn-success finalizar-btn" id="finalizar-btn" disabled onclick="finalizarActividad()">Finalizar Actividad</button>
+    </div>
+
+    <script>
+        const audioPlayer = document.getElementById('audio-player');
+        const finalizarBtn = document.getElementById('finalizar-btn');
+        let userResponse = ""; // Variable para guardar la respuesta del usuario
+
+        function playAudio() {
+            audioPlayer.play();
+        }
+
+        function pauseAudio() {
+            audioPlayer.pause();
+        }
+
+        function restartAudio() {
+            audioPlayer.currentTime = 0;
+            audioPlayer.play();
+        }
+
+        function retroceder10() {
+            audioPlayer.currentTime = Math.max(0, audioPlayer.currentTime - 10);
+        }
+
+        function adelantar10() {
+            audioPlayer.currentTime = Math.min(audioPlayer.duration, audioPlayer.currentTime + 10);
+        }
+
+        function toggleFinalizarButton() {
+            const textArea = document.querySelector('.text-container textarea');
+            finalizarBtn.disabled = textArea.value.trim() === '';
+            userResponse = textArea.value; // Guardar la respuesta del usuario
+        }
+
+        function finalizarActividad() {
+            alert("Excelente, gracias por compartir con nosotros tu respuesta 🤖");
+            redirectToActividad();
+        }
+
+        function redirectToActividad() {
+            window.location.href = "{% url 'actividadAleatoria' %}";
+        }
+    </script>
+{% endblock %}

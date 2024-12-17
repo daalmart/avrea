@@ -1,0 +1,295 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Actividad Activo</title>
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-image: url("{% static 'blog/fondo2.png' %}");
+            background-size: cover; /* Mantiene la imagen proporcionada y cubre la pantalla */
+            background-position: center; /* Centra la imagen */
+            background-attachment: fixed; /* La imagen permanece fija al hacer scroll */
+            font-family: 'Source Sans Pro', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 20px 0;
+            text-align: center;
+            color: #ffffff;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 36px;
+        }
+        header h2 {
+            margin: 10px 0;
+            font-size: 24px;
+        }
+        .contenedor {
+            margin: 0 auto;
+            width: 80%;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+        }
+        .blue-box {
+            background-color: #00796b;
+            color: white;
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            font-size: 1.2rem;
+            text-align: center;
+        }
+        .drag-container, .drop-container, .text-container {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+        .text-draggable, .droppable {
+            width: 150px;  /* Ajustar a un tamaño uniforme */
+            height: 100px;
+            margin: 10px;
+            border: 2px solid #00796b;
+            border-radius: 5px;
+            text-align: center;
+            padding: 20px;
+        }
+        .droppable {
+            border: 2px dashed #00796b;
+            background-color: #f0f0f0;
+            color: #00796b;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+        }
+        .info-container {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+        .info-box {
+            flex: 1;
+            margin: 10px;
+            border: 2px solid #00796b;
+            border-radius: 5px;
+            background-color: #b2dfdb;
+            color: black;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            text-align: justify;
+            padding: 5px;
+        }
+        .correct {
+            background-color: #4caf50;
+            border-color: #388e3c;
+            color: white;
+        }
+        .btn-finalizar {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .btn-finalizar:hover {
+            background-color: #0056b3;
+        }
+        .incorrect {
+            border-color: #d32f2f;
+            background-color: #ffcdd2;
+        }
+        .static-container {
+            text-align: center;
+            margin: 10px 0;
+            font-size: 1.2rem;
+            color: #00796b;
+        }
+        .static-container span {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1><a href="{% url 'home' %}" style="color: #ffffff;">AVREA</a></h1>
+            <h2>Asistente virtual para el reconocimiento de estilos de aprendizaje</h2>
+        </div>
+    </header>
+
+    <!-- Contenedor estático de intentos restantes -->
+    <div class="static-container">
+        Intentos restantes: <span id="attempts-count">1</span>
+    </div>
+
+    <div class="contenedor">
+        <div class="blue-box">
+            Arrastra la palabra correspondiente al contenedor adecuado:
+        </div>
+
+        <!-- Contenedor de imágenes como referencia -->
+        <div class="drag-container">
+            <div class="draggable">
+                <img src="{% static 'blog/imagen1.png' %}" alt="Imagen 1" width="100%">
+            </div>
+            <div class="draggable">
+                <img src="{% static 'blog/imagen2.png' %}" alt="Imagen 2" width="100%">
+            </div>
+            <div class="draggable">
+                <img src="{% static 'blog/imagen3.png' %}" alt="Imagen 3" width="100%">
+            </div>
+            <div class="draggable">
+                <img src="{% static 'blog/imagen4.png' %}" alt="Imagen 4" width="100%">
+            </div>
+        </div>
+
+        <!-- Contenedor de textos para arrastrar -->
+        <div class="text-container">
+            <div id="text1" class="text-draggable" draggable="true">Teléfono fijo</div>
+            <div id="text2" class="text-draggable" draggable="true">Máquina de escribir</div>
+            <div id="text3" class="text-draggable" draggable="true">Radio</div>
+            <div id="text4" class="text-draggable" draggable="true">Reproductor DVD</div>
+        </div>
+
+        <!-- Contenedor de palabras -->
+        <div class="drop-container">
+            <div id="drop1" class="droppable" data-correct="text1"></div>
+            <div id="drop2" class="droppable" data-correct="text2"></div>
+            <div id="drop3" class="droppable" data-correct="text3"></div>
+            <div id="drop4" class="droppable" data-correct="text4"></div>
+        </div>
+
+        <!-- Contenedor de información -->
+        <div class="info-container">
+            <div class="info-box static">Un dispositivo de comunicación con cable, utilizado para hacer llamadas, que debe estar conectado a una línea telefónica fija.</div>
+            <div class="info-box static">Un aparato mecánico o eléctrico con teclas que, al ser presionadas, imprimen letras y símbolos en papel, utilizado antes de la llegada de las computadoras para redactar documentos.</div>
+            <div class="info-box static">Un dispositivo que recibe señales de audio a través de ondas de radio y las convierte en sonido, permitiendo escuchar música, noticias y programas de entretenimiento.</div>
+            <div class="info-box static">Un dispositivo óptico que proyecta imágenes fijas (diapositivas) sobre una pantalla o pared.</div>
+        </div>
+
+        
+        <!-- Nuevo contenedor para mostrar APT2 -->
+        <div class="actividad-siguiente">
+            <p>La siguiente actividad es: <strong>{{ Test_VARK }}</strong></p>
+        </div>
+
+        <button class="btn-finalizar" onclick="finalizar()">Finalizar</button>
+        <button id="btn-continuar" class="btn-finalizar" onclick="continuar()" style="display: none;">Siguiente Actividad</button>
+
+    </div>
+
+    <script>
+        let attempts = 1; // Asumiendo que comienzas con 2 intentos
+
+        document.querySelectorAll('.text-draggable').forEach(item => {
+            item.addEventListener('dragstart', dragStart);
+        });
+
+        document.querySelectorAll('.droppable').forEach(item => {
+            item.addEventListener('dragover', dragOver);
+            item.addEventListener('drop', drop);
+        });
+
+        function dragStart(event) {
+            event.dataTransfer.setData('text/plain', event.target.id);
+        }
+
+        function dragOver(event) {
+            event.preventDefault();
+        }
+
+        function drop(event) {
+            event.preventDefault();
+            const draggableElementId = event.dataTransfer.getData('text/plain');
+            const droppableElement = event.target;
+
+            if (!droppableElement.classList.contains('droppable') || droppableElement.querySelector('.text-draggable')) {
+                return;
+            }
+
+            const draggableElement = document.getElementById(draggableElementId);
+            droppableElement.appendChild(draggableElement);
+        }
+
+        function verificarRespuestas() {
+            let todasCorrectas = true;
+            let aciertos = 0;
+
+            document.querySelectorAll('.droppable').forEach(item => {
+                const correcta = item.getAttribute('data-correct');
+                const arrastrada = item.querySelector('.text-draggable');
+
+                if (arrastrada && arrastrada.id === correcta) {
+                    item.classList.add('correct');
+                    aciertos++;
+                } else {
+                    item.classList.add('incorrect');
+                    todasCorrectas = false;
+                }
+            });
+
+            return todasCorrectas;
+        }
+
+        function finalizar() {
+            if (verificarRespuestas()) {
+                alert('¡Correcto! Todas las respuestas son correctas.');
+                document.getElementById('btn-continuar').style.display = 'block'; // Muestra el botón "Siguiente Actividad" si todas las respuestas son correctas
+            } else {
+                if (attempts > 0) {
+                    attempts--;
+                    document.getElementById('attempts-count').innerText = attempts;
+                    alert('¡Algunas respuestas son incorrectas! Intenta de nuevo.');
+                    document.querySelectorAll('.incorrect').forEach(item => {
+                        const elementoIncorrecto = item.querySelector('.text-draggable');
+                        item.classList.remove('incorrect');
+                        item.removeChild(elementoIncorrecto);
+                        document.querySelector('.text-container').appendChild(elementoIncorrecto);
+                    });
+                } else {
+                    alert('No tienes más intentos.');
+                    document.getElementById('btn-continuar').style.display = 'block'; // Muestra el botón "Siguiente Actividad" cuando no queden intentos
+                }
+            }
+        }
+
+        function continuar() {
+            // Mostrar el botón de continuar
+            document.getElementById("btn-continuar").style.display = "block";
+
+            // Lógica para redirigir a la actividad correspondiente
+            let APT2 = "{{ Test_VARK }}"; // Suponiendo que APT2 se asigna en el contexto de Django
+
+            let url = "";
+            if (APT2 === "Visual") {
+                url = "{% url 'actividadVisual' %}";
+            } else if (APT2 === "Auditivo") {
+                url = "{% url 'actividadAuditivo' %}";
+            } else if (APT2 === "Escrito") {
+                url = "{% url 'actividadLE' %}";
+            } else if (APT2 === "Kinestésico") {
+                url = "{% url 'actividadKinestesico' %}";
+            } else {
+                alert("No se ha encontrado una actividad sugerida para APT2.");
+                return; // Salir de la función si no hay actividad
+            }
+
+            // Redirigir al enlace correspondiente
+            window.location.href = url;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,189 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Actividad Teórica:)</title>
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-image: url("{% static 'blog/fondo2.png' %}");
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            font-family: 'Source Sans Pro', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 20px 0;
+            text-align: center;
+            color: #ffffff;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .content {
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            display: flex;
+            align-items: flex-start;
+        }
+        .definicion-tecnologia {
+            border: 2px solid #007bff;
+            padding: 20px;
+            background-color: #007bff;
+            color: #ffffff;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            width: 100%;
+        }
+        .titulo-tecnologia {
+            font-size: 40px;
+            font-weight: bold;
+            color: #ffffff;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        .form-control {
+            margin-bottom: 20px;
+            width: 80%;
+        }
+        button {
+            margin-top: 20px;
+            background-color: gray; /* Color gris por defecto */
+            color: white; /* Texto blanco */
+            cursor: not-allowed; /* Cambiar cursor a no permitido */
+        }
+        button:enabled {
+            background-color: #007bff; /* Color del botón cuando está habilitado */
+            cursor: pointer; /* Cambiar cursor a puntero */
+        }
+        .form-group {
+            transition: all 0.3s ease; /* Añade una transición suave */
+        }
+        .form-group.valid {
+            background-color: #d4edda; /* Color verde suave para contenedores válidos */
+            border: 2px solid #28a745; /* Borde verde */
+            border-radius: 8px; /* Bordes redondeados */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para el efecto de elevación */
+        }
+        .actividad-siguiente {
+            margin-top: 20px;
+            padding: 15px;
+            border: 2px solid #28a745; /* Borde verde para destacar */
+            border-radius: 10px;
+            background-color: #e7f3fe; /* Fondo claro */
+            color: #155724; /* Texto verde */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="content">
+            <div class="questions-container">
+                <div class="definicion-tecnologia">
+                    <div class="titulo-tecnologia">Tecnología 🤖🖥️</div>
+                    <p>La tecnología es un conjunto de conocimientos basados en hechos y lógica. A través del diseño y la planificación, permite transformar ideas en soluciones prácticas que mejoran la vida de las personas y de la sociedad.</p>
+                </div>
+
+                <p>A raíz de la anterior información, responde las siguientes preguntas:</p>
+
+                <form id="formulario">
+                    <div class="form-group" id="grupo-pregunta1">
+                        <label for="pregunta1">¿Qué es la tecnología según el texto?</label>
+                        <input type="text" class="form-control" id="pregunta1" name="pregunta1" placeholder="Escribe tu respuesta aquí" oninput="validarPregunta()">
+                    </div>
+
+                    <div class="form-group" id="grupo-pregunta2">
+                        <label for="pregunta2">¿Cómo ayuda la tecnología a mejorar la vida de las personas y la sociedad?</label>
+                        <input type="text" class="form-control" id="pregunta2" name="pregunta2" placeholder="Escribe tu respuesta aquí" oninput="validarPregunta()">
+                    </div>
+
+                    <div class="form-group" id="grupo-pregunta3">
+                        <label for="pregunta3">¿Puedes mencionar un ejemplo de una herramienta o sistema tecnológico que usemos a diario?</label>
+                        <input type="text" class="form-control" id="pregunta3" name="pregunta3" placeholder="Escribe tu respuesta aquí" oninput="validarPregunta()">
+                    </div>
+                    <button type="button" class="btn btn-primary" id="guardar-btn" onclick="guardarRespuestas()" disabled>Guardar Respuestas</button>
+                </form>
+                <button id="btn-continuar" class="btn-finalizar" onclick="continuar()" style="display: none;">Siguiente Actividad</button>
+
+                <!-- Nuevo contenedor para mostrar APT2 -->
+                <div class="actividad-siguiente">
+                    <p>La siguiente actividad es: <strong>{{ Test_VARK }}</strong></p>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function validarPregunta() {
+            let allFilled = true; // Variable para verificar si todas están llenas
+            const inputs = document.querySelectorAll('.form-control');
+            
+            inputs.forEach(input => {
+                const group = input.closest('.form-group');
+                // Verifica si el input no está vacío
+                if (input.value.trim() !== "") {
+                    group.classList.add("valid"); // Añade clase para el color verde
+                } else {
+                    group.classList.remove("valid"); // Quita la clase si está vacío
+                    allFilled = false; // Si hay un vacío, cambiar a false
+                }
+            });
+
+            // Habilita el botón solo si todas las preguntas están respondidas
+            document.getElementById('guardar-btn').disabled = !allFilled;
+        }
+
+        function guardarRespuestas() {
+            const pregunta1 = document.getElementById('pregunta1').value.trim();
+            const pregunta2 = document.getElementById('pregunta2').value.trim();
+            const pregunta3 = document.getElementById('pregunta3').value.trim();
+
+            // Verifica si alguna de las preguntas está vacía nuevamente
+            if (pregunta1 === "" || pregunta2 === "" || pregunta3 === "") {
+                alert("Por favor, responde todas las preguntas antes de continuar.");
+            } else {
+                // Si todas las preguntas están respondidas
+                console.log("Pregunta 1:", pregunta1);
+                console.log("Pregunta 2:", pregunta2);
+                console.log("Pregunta 3:", pregunta3);
+                alert("Respuestas guardadas con éxito!");
+                document.getElementById('btn-continuar').style.display = 'block';
+            }
+        }
+
+        function continuar() {
+            // Mostrar el botón de continuar
+            document.getElementById("btn-continuar").style.display = "block";
+
+            // Lógica para redirigir a la actividad correspondiente
+            let APT2 = "{{ Test_VARK }}"; // Suponiendo que APT2 se asigna en el contexto de Django
+            let url = "";
+            if (APT2 === "Visual") {
+                url = "{% url 'actividadVisual' %}";
+            } else if (APT2 === "Auditivo") {
+                url = "{% url 'actividadAuditivo' %}";
+            } else if (APT2 === "Escrito") {
+                url = "{% url 'actividadLE' %}";
+            } else if (APT2 === "Kinestésico") {
+                url = "{% url 'actividadKinestesico' %}";
+            } else {
+                alert("No se ha encontrado una actividad sugerida para APT2.");
+                return; // Salir de la función si no hay actividad
+            }
+
+            // Redirigir al enlace correspondiente
+            window.location.href = url;
+        }
+    </script>
+{% endblock %}

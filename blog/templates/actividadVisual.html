@@ -1,0 +1,267 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Actividad Visual</title>
+    <!-- Importar jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    
+    <style>
+        body {
+            background-image: url("{% static 'blog/fondo2.png' %}");
+            background-size: cover; /* Mantiene la imagen proporcionada y cubre la pantalla */
+            background-position: center; /* Centra la imagen */
+            background-attachment: fixed; /* La imagen permanece fija al hacer scroll */
+            font-family: 'Source Sans Pro', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 20px 0;
+            text-align: center;
+            color: #ffffff;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 36px;
+        }
+        header h2 {
+            margin: 10px 0;
+            font-size: 24px;
+        }
+        .nav-right {
+            float: right;
+            margin-top: 20px;
+            margin-right: 20px;
+        }
+        .nav-right a {
+            color: #ffffff;
+            background-color: #007bff;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .nav-right a:hover {
+            background-color: #0056b3;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .content {
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+        .definicion-tecnologia {
+            border: 2px solid #007bff;
+            padding: 20px;
+            background-color: #007bff;
+            color: #ffffff;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .titulo-tecnologia {
+            font-size: 40px;
+            font-weight: bold;
+            color: #ffffff;
+            margin-bottom: 20px;
+            font-family: 'Source Sans Pro', sans-serif;
+        }
+        label {
+            font-weight: bold;
+        }
+        .form-control {
+            margin-bottom: 20px;
+            width: 80%;
+        }
+        .main-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+        .image-container {
+            flex: 1;
+            padding-right: 20px;
+        }
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+        .questions-container {
+            flex: 1;
+            padding-left: 20px;
+        }
+        .drop-container {
+            border: 2px solid #007bff;
+            border-radius: 10px;
+            width: 100%;
+            height: 80px;
+            margin: 10px 0;
+            background-color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 10px;
+            position: relative;
+        }
+        .drop-container label {
+            margin-right: 10px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .drop-container input {
+            width: 70%; /* Reduced width to accommodate the correct answer */
+            padding: 10px;
+            border: 1px solid #007bff;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        .correct {
+            background-color: #28a745;
+        }
+        .incorrect {
+            background-color: #dc3545;
+        }
+        .btn-next {
+            background-color: #ff0000;
+            color: #ffffff;
+        }
+        .respuesta-correcta {
+            margin-left: 10px; /* Added margin to position the correct answer closer */
+            font-weight: bold;
+            color: #000;
+        }
+    </style>
+</head>
+<body>
+   <div class="container">
+
+        
+        <div class="content">
+            <div class="definicion-tecnologia">
+                <div class="titulo-tecnologia">Partes del Computador</div>
+                <p>Completa los contenedores con los nombres de las partes del computador según la imagen.</p>
+            </div>
+
+            <div class="main-container">
+                <div class="image-container">
+                    <img src="{% static 'blog/partes_computador.png' %}" alt="Partes del Computador">
+                </div>
+                
+                <div class="questions-container">
+                    <div class="drop-container" id="container1">
+                        <label for="respuesta1">1</label>
+                        <input type="text" id="respuesta1" placeholder="Nombre de la parte del computador">
+                        <span class="respuesta-correcta" id="respuestaCorrecta1"></span>
+                    </div>
+                    <div class="drop-container" id="container2">
+                        <label for="respuesta2">2</label>
+                        <input type="text" id="respuesta2" placeholder="Nombre de la parte del computador">
+                        <span class="respuesta-correcta" id="respuestaCorrecta2"></span>
+                    </div>
+                    <div class="drop-container" id="container3">
+                        <label for="respuesta3">3</label>
+                        <input type="text" id="respuesta3" placeholder="Nombre de la parte del computador">
+                        <span class="respuesta-correcta" id="respuestaCorrecta3"></span>
+                    </div>
+                    <div class="drop-container" id="container4">
+                        <label for="respuesta4">4</label>
+                        <input type="text" id="respuesta4" placeholder="Nombre de la parte del computador">
+                        <span class="respuesta-correcta" id="respuestaCorrecta4"></span>
+                    </div>
+                    
+                    <button type="button" class="btn btn-primary" id="guardarBtn" onclick="guardarRespuestas()">Guardar Respuestas</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+       
+
+        
+
+        
+        function guardarRespuestas() {
+            // Obtener las respuestas y convertir a minúsculas
+            var respuesta1 = document.getElementById('respuesta1').value.toLowerCase();
+            var respuesta2 = document.getElementById('respuesta2').value.toLowerCase();
+            var respuesta3 = document.getElementById('respuesta3').value.toLowerCase();
+            var respuesta4 = document.getElementById('respuesta4').value.toLowerCase();
+
+            // Respuestas correctas
+            var correctas = {
+                container1: ['pantalla', 'monitor'],
+                container2: ['teclado'],
+                container3: ['cpu', 'torre'],
+                container4: ['mouse', 'ratón']
+            };
+
+            var aciertos = 0;
+
+            // Validar respuestas y mostrar la respuesta correcta si es incorrecta
+            if (correctas.container1.includes(respuesta1)) {
+                document.getElementById('container1').classList.add('correct');
+                aciertos++;
+            } else {
+                document.getElementById('container1').classList.add('incorrect');
+                mostrarRespuestaCorrecta('respuestaCorrecta1', correctas.container1);
+            }
+
+            if (correctas.container2.includes(respuesta2)) {
+                document.getElementById('container2').classList.add('correct');
+                aciertos++;
+            } else {
+                document.getElementById('container2').classList.add('incorrect');
+                mostrarRespuestaCorrecta('respuestaCorrecta2', correctas.container2);
+            }
+
+            if (correctas.container3.includes(respuesta3)) {
+                document.getElementById('container3').classList.add('correct');
+                aciertos++;
+            } else {
+                document.getElementById('container3').classList.add('incorrect');
+                mostrarRespuestaCorrecta('respuestaCorrecta3', correctas.container3);
+            }
+
+            if (correctas.container4.includes(respuesta4)) {
+                document.getElementById('container4').classList.add('correct');
+                aciertos++;
+            } else {
+                document.getElementById('container4').classList.add('incorrect');
+                mostrarRespuestaCorrecta('respuestaCorrecta4', correctas.container4);
+            }
+
+            alert('Has tenido ' + aciertos + ' aciertos.');
+
+            // Deshabilitar campos de texto
+            document.getElementById('respuesta1').disabled = true;
+            document.getElementById('respuesta2').disabled = true;
+            document.getElementById('respuesta3').disabled = true;
+            document.getElementById('respuesta4').disabled = true;
+
+            // Cambiar botón a "Siguiente Actividad"
+            var guardarBtn = document.getElementById('guardarBtn');
+            guardarBtn.textContent = "Siguiente Actividad";
+            guardarBtn.classList.add('btn-next');
+            guardarBtn.onclick = function() {
+                window.location.href = "{% url 'actividadAleatoria' %}"; // Reemplazar con la URL de la siguiente actividad
+            };
+        }
+
+        function mostrarRespuestaCorrecta(elementId, respuestasCorrectas) {
+            var respuestaCorrecta = document.getElementById(elementId);
+            respuestaCorrecta.textContent = "/ Respuesta correcta: " + respuestasCorrectas[0];
+        }
+    </script>
+{% endblock %}

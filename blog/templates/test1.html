@@ -1,0 +1,32 @@
+<!-- templates/test1.html -->
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <div style="background-color: rgba(255, 255, 255, 0.8); padding: 20px; border-radius: 10px;">
+        <h1>TEST 1 - HACEA</h1>
+        <div style="display: flex; align-items: center;">
+            <div style="flex: 1; padding-right: 20px; color: black;">
+                <p>Hola, hoy vamos a aprender sobre los estilos de aprendizaje de Honey y Alonso. ¿Sabías que todos aprendemos de diferentes maneras? Algunos de nosotros aprendemos mejor escuchando, otros leyendo o haciendo cosas. ¡Vamos a descubrir tu estilo de aprendizaje!</p>
+                <p>Los estilos de aprendizaje de Honey y Alonso son:</p>
+                <ul>
+                    <li><strong>Activo:</strong> Te gusta aprender haciendo cosas y probando nuevas experiencias.</li>
+                    <li><strong>Reflexivo:</strong> Prefieres pensar y reflexionar antes de actuar.</li>
+                    <li><strong>Teórico:</strong> Te gusta aprender a través de ideas y conceptos.</li>
+                    <li><strong>Pragmático:</strong> Prefieres aprender cosas que puedes aplicar en la vida real.</li>
+                </ul>
+                <p>Vamos a hacer un test con varias preguntas. Debes responder con total tranquilidad, ya que no hay respuestas incorrectas. La honestidad ayudará a identificar tu estilo de aprendizaje.</p>
+            </div>
+            <div style="flex: 1;">
+                <img src="{% static 'blog/niños.png' %}" alt="Estilos de Aprendizaje" style="width: 100%; border-radius: 10px;">
+            </div>
+        </div>
+        <div style="margin-top: 20px; text-align: left;">
+            <a href="{% url 'testuno' %}">
+                <button style="padding: 10px 20px; background-color: #007BFF; color: white; border: none; border-radius: 5px; display: block;">Empezar Test CHAE</button>
+            </a>
+        </div>
+    </div>
+{% endblock %}
+
+

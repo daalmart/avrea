@@ -1,0 +1,323 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juego de Ahorcado</title>
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-image: url("{% static 'blog/fondo2.png' %}");
+            background-size: cover; /* Mantiene la imagen proporcionada y cubre la pantalla */
+            background-position: center; /* Centra la imagen */
+            background-attachment: fixed; /* La imagen permanece fija al hacer scroll */
+            font-family: 'Source Sans Pro', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 20px 0;
+            text-align: center;
+            color: #ffffff;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 36px;
+        }
+        header h2 {
+            margin: 10px 0;
+            font-size: 24px;
+        }
+        .nav-right {
+            float: right;
+            margin-top: 20px;
+            margin-right: 20px;
+        }
+        .nav-right a {
+            color: #ffffff;
+            background-color: #007bff;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .nav-right a:hover {
+            background-color: #0056b3;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .content {
+            margin-top: 20px;
+        }
+        .info-container {
+            background-color: #007bff;
+            color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            width: 80%;
+            margin: 0 auto 20px auto;
+            font-size: 18px;
+        }
+        .hint-container {
+            background-color: #6f42c1;
+            color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            width: 80%;
+            margin: 0 auto 20px auto;
+            font-size: 18px;
+        }
+        .word-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .letter-container {
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #ffffff;
+            border: 2px solid #007bff;
+            border-radius: 5px;
+            margin: 0 5px;
+            font-size: 24px;
+            position: relative;
+        }
+        .letter-container.correct {
+            background-color: #28a745;
+            color: #ffffff;
+        }
+        .letter-container.incorrect {
+            background-color: #dc3545;
+            color: #ffffff;
+        }
+        .letter-container input {
+            border: none;
+            outline: none;
+            font-size: 24px;
+            text-align: center;
+            width: 100%;
+            height: 100%;
+            background: transparent;
+        }
+        .alert {
+            display: none;
+            margin-bottom: 20px;
+            color: #721c24;
+            background-color: #f8d7da;
+            border-color: #f5c6cb;
+            border-radius: 5px;
+            padding: 10px;
+            font-size: 1.2em;
+        }
+        .alert.show {
+            display: block;
+        }
+        .btn-container {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .btn-container button {
+            margin: 0 10px;
+        }
+        .correct-answer {
+            display: none;
+            margin-top: 20px;
+            padding: 10px;
+            border: 2px solid #dc3545;
+            color: #dc3545;
+            border-radius: 5px;
+            text-align: center;
+            font-size: 1.2em;
+        }
+        .correct-answer span {
+            font-weight: bold;
+        }
+        .btn-blue {
+            background-color: #007bff;
+            color: #ffffff;
+            border: none;
+        }
+        .btn-blue:hover {
+            background-color: #0056b3;
+        }
+        .btn-green {
+            background-color: #28a745;
+            color: #ffffff;
+            border: none;
+        }
+        .btn-green:hover {
+            background-color: #218838;
+        }
+        .disabled {
+            pointer-events: none;
+            opacity: 0.6;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="info-container">
+            <p>Completa la palabra con las letras correctas:</p>
+        </div>
+
+        <div id="hint-container" class="hint-container"></div>
+
+        <div class="content">
+            <div id="word-display" class="word-container"></div>
+            <div class="attempts">Intentos restantes: <span id="intentos">10</span></div>
+            <div class="incorrect-letters">Letras incorrectas: <span id="incorrectas"></span></div>
+
+            <form id="formulario" onsubmit="return false;">
+                <input type="text" id="input-letra" maxlength="1" placeholder="Ingresa una letra">
+                <button type="button" class="btn btn-primary" onclick="verificarLetra()">Adivinar Letra</button>
+                <div id="mensaje" class="alert">Respuesta incorrecta.</div>
+                <div id="respuesta-correcta" class="correct-answer">La respuesta correcta es: <span id="respuesta-texto"></span></div>
+                <button id="siguiente-palabra" type="button" class="btn btn-blue btn-next" onclick="siguientePregunta()">Siguiente Palabra</button>
+                <a id="siguiente-actividad" href="{% url 'actividadAleatoria'%}" class="btn btn-green btn-next">Siguiente Actividad</a>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        var intentosRestantes = 10;
+        var palabras = [
+            { palabra: 'tecnología', pista: 'Es un elemento que nos ayuda a resolver problemas y satisfacer necesidades, como computadoras, teléfonos y más.', 
+              mensajeCorrecto: '¡Genial! Has adivinado la palabra "tecnología". Sabías que la tecnología está en todas partes y nos ayuda en casi todo lo que hacemos.',
+              mensajeIncorrecto: 'No adivinaste la palabra. La palabra correcta es "tecnología". La tecnología hace nuestra vida más fácil y divertida.' 
+            },
+            { palabra: 'computador', pista: 'Es una máquina que está compuesta por una CPU, un mouse y un monitor. Juntos forman un dispositivo que usamos para trabajar y jugar.',
+              mensajeCorrecto: '¡Bien hecho! La palabra correcta es "computador". Los computadores nos ayudan a hacer tareas, jugar y aprender cosas nuevas.',
+              mensajeIncorrecto: 'No acertaste la palabra. La palabra correcta es "computador". Es una máquina que usamos para muchas cosas, desde escribir hasta jugar.'
+            },
+            { palabra: 'informatica', pista: 'Es el estudio de las computadoras y cómo usamos las máquinas para hacer tareas y resolver problemas.',
+              mensajeCorrecto: '¡Felicidades! Has adivinado "informática". La informática es esencial para aprender cómo funcionan las computadoras y la tecnología.',
+              mensajeIncorrecto: 'No adivinaste. La palabra correcta es "informática". Estudiar informática te ayuda a entender cómo usar y programar computadoras.'
+            }
+        ];
+
+        var currentQuestionIndex = 0;
+        var palabraActual;
+        var letrasIncorrectas = [];
+        var letrasCorrectas = [];
+        var inputLetra = document.getElementById('input-letra');
+
+        function inicializarJuego() {
+            palabraActual = palabras[currentQuestionIndex].palabra;
+            letrasIncorrectas = [];
+            letrasCorrectas = Array(palabraActual.length).fill(false);
+            intentosRestantes = 10; // Reiniciar los intentos
+            document.getElementById('intentos').textContent = intentosRestantes;
+            document.getElementById('incorrectas').textContent = letrasIncorrectas.join(', ');
+            document.getElementById('respuesta-correcta').classList.remove('show');
+            document.getElementById('siguiente-palabra').style.display = 'none';
+            document.getElementById('siguiente-actividad').style.display = 'none';
+            inputLetra.disabled = false;
+            document.getElementById('hint-container').textContent = palabras[currentQuestionIndex].pista;
+            actualizarDisplayPalabra();
+        }
+
+        function actualizarDisplayPalabra() {
+            const wordDisplay = document.getElementById('word-display');
+            wordDisplay.innerHTML = '';
+            for (let i = 0; i < palabraActual.length; i++) {
+                const container = document.createElement('div');
+                container.className = 'letter-container';
+                if (letrasCorrectas[i]) {
+                    container.textContent = palabraActual[i];
+                    container.classList.add('correct');
+                } else {
+                    container.textContent = '_';
+                }
+                wordDisplay.appendChild(container);
+            }
+        }
+
+        function verificarLetra() {
+            const letra = inputLetra.value.toLowerCase();
+            if (letra === '') return;
+
+            let acerto = false;
+            for (let i = 0; i < palabraActual.length; i++) {
+                if (palabraActual[i] === letra) {
+                    letrasCorrectas[i] = true;
+                    acerto = true;
+                }
+            }
+
+            if (acerto) {
+                actualizarDisplayPalabra();
+                if (!letrasCorrectas.includes(false)) {
+                    setTimeout(() => {
+                        document.querySelectorAll('.letter-container').forEach((container, index) => {
+                            if (letrasCorrectas[index]) {
+                                container.classList.add('correct');
+                            }
+                        });
+                        document.getElementById('respuesta-correcta').classList.add('show');
+                        document.getElementById('respuesta-texto').textContent = palabraActual;
+                        alert(palabras[currentQuestionIndex].mensajeCorrecto);
+                        intentosRestantes = 10; // Reiniciar los intentos
+                        document.getElementById('siguiente-palabra').style.display = 'block'; // Mostrar el botón de siguiente palabra
+                        inputLetra.disabled = true; // Deshabilitar la entrada hasta cambiar de palabra
+                    }, 100); // Esperar 100 ms para asegurar que la última letra sea mostrada
+                }
+            } else {
+                intentosRestantes--;
+                document.getElementById('intentos').textContent = intentosRestantes;
+                letrasIncorrectas.push(letra);
+                document.getElementById('incorrectas').textContent = letrasIncorrectas.join(', ');
+
+                if (intentosRestantes <= 0) {
+                    document.querySelectorAll('.letter-container').forEach((container, index) => {
+                        if (!letrasCorrectas[index]) {
+                            container.textContent = palabraActual[index];
+                            container.classList.add('incorrect');
+                        } else {
+                            container.classList.add('correct');
+                        }
+                    });
+                    document.getElementById('respuesta-correcta').classList.add('show');
+                    document.getElementById('respuesta-texto').textContent = palabraActual;
+                    alert(palabras[currentQuestionIndex].mensajeIncorrecto);
+                    inputLetra.disabled = true; // Deshabilitar la entrada hasta cambiar de palabra
+                    document.getElementById('siguiente-palabra').style.display = 'block'; // Mostrar el botón de siguiente palabra
+                }
+            }
+            inputLetra.value = '';
+        }
+
+        function siguientePregunta() {
+            if (currentQuestionIndex < palabras.length - 1) {
+                currentQuestionIndex++;
+                inicializarJuego();
+            } else {
+                document.getElementById('siguiente-actividad').style.display = 'block'; // Mostrar el botón de siguiente actividad
+                document.getElementById('siguiente-palabra').style.display = 'none'; // Ocultar el botón de siguiente palabra
+            }
+        }
+
+        document.getElementById('siguiente-actividad').addEventListener('click', function() {
+            window.location.href = '{% url 'actividadVisual' %}';
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            inicializarJuego();
+        });
+
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault(); // Prevenir el comportamiento por defecto del formulario
+                verificarLetra();
+            }
+        });
+    </script>
+{% endblock %}

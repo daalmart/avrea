@@ -1,0 +1,164 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Actividad</title>
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-image: url("{% static 'blog/fondo2.png' %}");
+            background-size: cover; /* Mantiene la imagen proporcionada y cubre la pantalla */
+            background-position: center; /* Centra la imagen */
+            background-attachment: fixed; /* La imagen permanece fija al hacer scroll */
+            font-family: 'Source Sans Pro', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 20px 0;
+            text-align: center;
+            color: #ffffff;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 36px;
+        }
+        header h2 {
+            margin: 10px 0;
+            font-size: 24px;
+        }
+        .nav-right {
+            float: right;
+            margin-top: 20px;
+            margin-right: 20px;
+        }
+        .nav-right a {
+            color: #ffffff;
+            background-color: #007bff;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .nav-right a:hover {
+            background-color: #0056b3;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .content {
+            margin-top: 20px;
+        }
+        .info-container {
+            background-color: #007bff;
+            color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            width: 80%;
+            margin: 0 auto 20px auto;
+            font-size: 18px;
+        }
+        .image-section {
+            width: 80%;
+            margin: 0 auto;
+        }
+        .image-section img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+        .form-group {
+            width: 80%;
+            margin: 20px auto; /* Added margin to create space between image and questions */
+        }
+        .form-group label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 10px;
+        }
+        .form-control {
+            margin-bottom: 20px;
+            width: 100%;
+            font-size: 1.2em;
+            padding: 15px;
+        }
+        .alert {
+            display: none;
+            margin-bottom: 20px;
+            color: #721c24;
+            background-color: #f8d7da;
+            border-color: #f5c6cb;
+            border-radius: 5px;
+            padding: 10px;
+            font-size: 1.2em;
+        }
+        .alert.show {
+            display: block;
+        }
+        .btn-container {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .btn-container button {
+            margin: 0 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="info-container">
+            <p>Responde la pregunta con tus palabras después de haber leído la información sobre la IA:</p>
+        </div>
+
+        <div class="content">
+            <div class="image-section">
+                <img src="{% static 'blog/escrito_lector.png' %}" alt="Historia Reflexiva">
+            </div>
+
+            <form id="formulario">
+                <div class="form-group">
+                    <label for="pregunta1">¿Cómo te imaginas que será el futuro con la IA en nuestra vida diaria? Comparte tu respuesta aquí 👇🏼</label>
+                    <input type="text" class="form-control" id="pregunta1" name="pregunta1" placeholder="Escribe tu respuesta aquí">
+                </div>
+
+                <div class="form-group">
+                    <label for="pregunta2">¿Qué impactos crees que la IA tendrá en diferentes aspectos de nuestra vida diaria?</label>
+                    <input type="text" class="form-control" id="pregunta2" name="pregunta2" placeholder="Escribe tu respuesta aquí">
+                </div>
+
+                <div id="mensaje" class="alert">
+                    Espacio no respondido.
+                </div>
+
+                <div class="btn-container">
+                    <button type="button" class="btn btn-primary" onclick="guardarRespuestas()">FINALIZAR</button>
+                    <a id="siguiente-actividad" href="{% url 'actividadAleatoria'%}" class="btn btn-success" style="display:none;">Siguiente Actividad</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function guardarRespuestas() {
+            var pregunta1 = document.getElementById('pregunta1').value;
+            var pregunta2 = document.getElementById('pregunta2').value;
+            var mensaje = document.getElementById('mensaje');
+            var siguienteActividad = document.getElementById('siguiente-actividad');
+
+            if (pregunta1.trim() === "" || pregunta2.trim() === "") {
+                mensaje.classList.add('show');
+            } else {
+                mensaje.classList.remove('show');
+                alert("Respuestas guardadas.");
+
+                // Show the "Siguiente Actividad" button
+                siguienteActividad.style.display = 'inline-block';
+            }
+        }
+    </script>
+{% endblock %}

@@ -1,0 +1,129 @@
+<!-- templates/home.html -->
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <div class="container">
+        <!-- Título alineado a la izquierda -->
+        <div class="header">
+            <h2>Bienvenido a AVREA</h2>
+        </div>
+
+        <!-- Estructura con dos columnas: información a la izquierda, GIF a la derecha -->
+        <div class="content">
+            <!-- Columna izquierda: texto informativo dividido en tres partes en contenedores -->
+            <div class="info-container">
+                <!-- Primer contenedor -->
+                <div class="info-box">
+                    <p>
+                        La finalidad de este espacio es proporcionarte las herramientas necesarias para identificar y comprender tu estilo de aprendizaje, utilizando como base las teorías de Honey y Alonso, así como la de Fleming.
+                    </p>
+                </div>
+
+                <!-- Segundo contenedor -->
+                <div class="info-box">
+                    <p>
+                        Al descubrir tu estilo de aprendizaje predominante, no solo obtendrás un conocimiento más profundo de tus propias virtudes y preferencias a la hora de aprender, sino que también podrás colaborar con tus docentes para que adapten el desarrollo del curso a tus necesidades específicas.
+                    </p>
+                </div>
+
+                <!-- Tercer contenedor -->
+                <div class="info-box">
+                    <p>
+                        Este test ha sido diseñado meticulosamente para ayudarte a reconocer tus fortalezas en el proceso educativo, facilitando una experiencia de aprendizaje más personalizada, efectiva y motivadora.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Columna derecha: GIF del robot (más grande) -->
+            <div class="welcome-gif">
+                <img src="{% static 'blog/robot.gif' %}" alt="Personaje saludando">
+            </div>
+        </div>
+
+        <!-- Botón estilizado -->
+        <div class="start-test"> 
+            <a href="{% url 'resultadostest' %}">
+                <button class="start-btn">Ver resultados del test</button>
+            </a>
+        
+            <a href="{% url 'test1' %}">
+                <button class="start-btn">Comenzar Test</button>
+            </a> 
+           
+            
+        </div>
+
+    </div>
+
+    <style>
+        /* Fondo azul con un patrón ligero */
+        body {
+            background-image: url("{% static 'blog/fondo2.png' %}");
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            font-family: 'Source Sans Pro', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        /* Título alineado a la izquierda con sombra azul */
+        .header h2 {
+            font-size: 48px;
+            color: #000; /* Letra negra */
+            text-align: left; /* Alineado a la izquierda */
+            text-shadow: 2px 2px #007BFF; /* Sombra azul */
+            margin-left: 50px; /* Ajuste de margen izquierdo */
+        }
+
+        /* Distribución en dos columnas */
+        .content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        /* Estilos para los contenedores de información */
+        .info-container {
+            text-align: left;
+            max-width: 600px;
+            margin-left: 50px;
+        }
+
+        .info-box {
+            background-color: #007BFF; /* Fondo azul */
+            color: #fff; /* Texto blanco */
+            padding: 20px;
+            margin-bottom: 20px; /* Espaciado entre los contenedores */
+            font-size: 18px;
+            line-height: 1.6;
+            text-align: justify; /* Justificar texto */
+            border-radius: 8px; /* Bordes redondeados */
+            transition: background-color 0.3s ease; /* Transición suave */
+        }
+
+        /* Cambiar color al pasar el mouse sobre los contenedores */
+        .info-box:hover {
+            background-color: #6A0DAD; /* Morado al pasar el mouse */
+        }
+
+        /* Estilo de la columna derecha con el GIF más grande */
+        .welcome-gif img {
+            width: 450px; /* Ajustar tamaño del GIF */
+        }
+
+       
+
+        /* Cambiar color del botón cuando el mouse pase sobre él */
+        .start-btn:hover {
+            background-color: #28a745; /* Verde al pasar el mouse */
+            transform: scale(1.05); /* Efecto de ampliación */
+        }
+    </style>
+{% endblock %}

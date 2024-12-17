@@ -1,0 +1,483 @@
+<!-- templates/testdos.html -->
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+<div class="container">
+    <h1>TEST DOS - CUESTIONARIO VARK</h1>
+    <form method="POST" action="{% url 'guardar_respuestast2' %}">
+        {% csrf_token %}
+        <div style="display: flex;">
+            <div style="flex: 2;">
+
+                <div>
+                    <button class="tablinks" onclick="openTab(event, 'tab1')" id="defaultOpen">Pregunta 1-4</button>
+                    <button class="tablinks" onclick="openTab(event, 'tab2')">Pregunta 5-8</button>
+                    <button class="tablinks" onclick="openTab(event, 'tab3')">Pregunta 9-12</button>
+                    <button class="tablinks" onclick="openTab(event, 'tab4')">Pregunta 13-16</button>
+                </div>
+
+                <div id="tab1" class="tabcontent">
+                    <ul>    
+                        <li>1. Necesito encontrar el camino a una tienda que me recomendó un amigo. Yo:</li>
+                        <ul>
+                            <li>&emsp;K. Buscaría dónde está la tienda en relación con algún lugar que conozco. &emsp;
+                                <label>
+                                    <input type="radio" name="p1" value="k" required> &#10003;
+                                </label>
+                            </li> 
+                            <li>&emsp;A. Le diría a mi amigo que me diera las indicaciones. &emsp;
+                                <label>
+                                    <input type="radio" name="p1" value="a" required> &#10003;
+                                </label>
+                            </li>
+                            <li>&emsp;R. Escribiría el nombre de la calle que debo recordar. &emsp;
+                                <label>
+                                    <input type="radio" name="p1" value="r" required> &#10003;
+                                </label>
+                            </li>
+                            <li>&emsp;V. Usaría un mapa. &emsp;
+                                <label>
+                                    <input type="radio" name="p1" value="v" required> &#10003;
+                                </label>
+                            </li>
+                        </ul>
+                        
+                        <li>2. Una página web tiene un vídeo que muestra cómo hacer un gráfico o una tabla especial. Hay una persona hablando, algunas listas y palabras que describen lo que hay que hacer y algunos diagramas. Aprendería más:</li>
+                        <ul>
+                            <li>&emsp;V. Viendo los diagramas. &emsp;
+                                <label>
+                                    <input type="radio" name="p2" value="v" required> &#10003;
+                                </label>
+                            </li> 
+                            <li>&emsp;A. Escuchando. &emsp;
+                                <label>
+                                    <input type="radio" name="p2" value="a" required> &#10003;
+                                </label>
+                            </li>
+                            <li>&emsp;R. Leyendo las palabras. &emsp;
+                                <label>
+                                    <input type="radio" name="p2" value="r" required> &#10003;
+                                </label>
+                            </li>
+                            <li>&emsp;K. Viendo las acciones. &emsp;
+                                <label>
+                                    <input type="radio" name="p2" value="k" required> &#10003;
+                                </label>
+                            </li>
+                        </ul>
+
+                        <li>3. Quiero saber más sobre una excursión a la que voy a ir. Yo:</li>
+                        <ul>
+                            <li>&emsp;K. Miraría los detalles sobre los aspectos más destacados y las actividades de la excursión. &emsp;
+                                <label>
+                                    <input type="radio" name="p3" value="k" required> &#10003;
+                                </label>
+                            </li> 
+                            <li>&emsp;V. Usaría un mapa y vería dónde están los lugares. &emsp;
+                                <label>
+                                    <input type="radio" name="p3" value="v" required> &#10003;
+                                </label>
+                            </li>
+                            <li>&emsp;R. Leería sobre la excursión en el itinerario. &emsp;
+                                <label>
+                                    <input type="radio" name="p3" value="r" required> &#10003;
+                                </label>
+                            </li>
+                            <li>&emsp;A. Hablaría con la persona que planificó la excursión o con otras personas que vayan a hacerla. &emsp;
+                                <label>
+                                    <input type="radio" name="p3" value="a" required> &#10003;
+                                </label>
+                            </li>
+                        </ul>
+            
+                        <li>4. A la hora de elegir una carrera o un área de estudio, esto es importante para mí:</li>
+                        <ul>
+                            <li>&emsp;K. Aplicar mis conocimientos en situaciones reales. &emsp;
+                                <label>
+                                    <input type="radio" name="p4" value="k" required> &#10003;
+                                </label>
+                            </li> 
+                            <li>&emsp;A. Comunicarme con otros a través del diálogo. &emsp;
+                                <label>
+                                    <input type="radio" name="p4" value="a" required> &#10003;
+                                </label>
+                            </li>
+                            <li>&emsp;V. Trabajar con diseños, mapas o gráficos. &emsp;
+                                <label>
+                                    <input type="radio" name="p4" value="v" required> &#10003;
+                                </label>
+                            </li>
+                            <li>&emsp;R. Utilizar bien las palabras en las comunicaciones escritas. &emsp;
+                                <label>
+                                    <input type="radio" name="p4" value="r" required> &#10003;
+                                </label>
+                            </li>
+                        </ul>
+                    </ul>
+                </div>
+
+                <div id="tab2" class="tabcontent" style="display: none;">
+                    <ul>
+                        <li>5. Cuando aprendo:</li>
+                        <ul>
+                            <li>&emsp;A. Me gusta hablar de las cosas. &emsp;
+                                <label>
+                                    <input type="radio" name="p5" value="a" required> &#10003;
+                                </label>
+                            </li> 
+                            <li>&emsp;V. Veo patrones en las cosas. &emsp;
+                                <label>
+                                    <input type="radio" name="p5" value="v" required> &#10003;
+                                </label>
+                            </li>
+                            <li>&emsp;K. Uso ejemplos y aplicaciones. &emsp;
+                                <label>
+                                    <input type="radio" name="p5" value="k" required> &#10003;
+                                </label>
+                            </li>
+                            <li>&emsp;R. Leo libros, artículos y folletos. &emsp;
+                                <label>
+                                    <input type="radio" name="p5" value="r" required> &#10003;
+                                </label>
+                            </li>
+                        </ul>
+                        <li>6. Quiero ahorrar más dinero y decidir entre una serie de opciones. Yo:</li>
+                        <ul>
+                            <li>&emsp;K. Consideraría ejemplos de cada opción utilizando mi información financiera. &emsp;
+                                <label>
+                                    <input type="radio" name="p6" value="k" required> &#10003;
+                                </label>
+                            </li> 
+                            <li>&emsp;R. Leería un folleto impreso que describa las opciones en detalle. &emsp;
+                                <label>
+                                    <input type="radio" name="p6" value="r" required> &#10003;
+                                </label>
+                            </li>
+                            <li>&emsp;V. Utilizaría gráficos que muestren diferentes opciones para diferentes periodos de tiempo. &emsp;
+                                <label>
+                                    <input type="radio" name="p6" value="v" required> &#10003;
+                                </label>
+                            </li>
+                            <li>&emsp;A. Hablaría con un experto sobre las opciones. &emsp;
+                                <label>
+                                    <input type="radio" name="p6" value="a" required> &#10003;
+                                </label>
+                            </li>
+                        </ul>
+                        <li>7. Quiero aprender a jugar un nuevo juego de mesa o de cartas. Yo:</li>
+                        <ul>
+                            <li>&emsp;K. Observaría a otros jugar antes de unirme al juego. &emsp;
+                                <label>
+                                    <input type="radio" name="p7" value="k" required> &#10003;
+                                </label>
+                            </li> 
+                            <li>&emsp;A. Escucharía a alguien que lo explicara y haría preguntas. &emsp;
+                                <label>
+                                    <input type="radio" name="p7" value="a" required> &#10003;
+                                </label>
+                            </li>
+                            <li>&emsp;V. Utilizaría los diagramas que explican las distintas fases, movimientos y estrategias del juego. &emsp;
+                                <label>
+                                    <input type="radio" name="p7" value="v" required> &#10003;
+                                </label>
+                            </li>
+                            <li>&emsp;R. Leería las instrucciones. &emsp;
+                                <label>
+                                    <input type="radio" name="p7" value="r" required> &#10003;
+                                </label>
+                            </li>
+                        </ul>
+                        <li>8. Tengo un problema en el corazón. Preferiría que el médico:</li>
+                        <ul>
+                            <li>&emsp;R. Le diera algo que leer para explicar lo que está mal. &emsp;
+                                <label>
+                                    <input type="radio" name="p8" value="r" required> &#10003;
+                                </label>
+                            </li> 
+                            <li>&emsp;K. Utilizara un modelo de plástico para mostrar lo que está mal. &emsp;
+                                <label>
+                                    <input type="radio" name="p8" value="k" required> &#10003;
+                                </label>
+                            </li>
+                            <li>&emsp;A. Describiera lo que está mal. &emsp;
+                                <label>
+                                    <input type="radio" name="p8" value="a" required> &#10003;
+                                </label>
+                            </li>
+                            <li>&emsp;V. Le mostrara un diagrama de lo que está mal. &emsp;
+                                <label>
+                                    <input type="radio" name="p8" value="v" required> &#10003;
+                                </label>
+                            </li>
+                        </ul>
+                    </ul>
+                </div>
+
+
+                <div id="tab3" class="tabcontent" style="display: none;">
+                    <ul>
+                        <li>9. Quiero aprender a hacer algo nuevo en una computadora. Yo: <br>
+                        <ul>
+                            <li>&emsp;R. Leería las instrucciones escritas que vienen con el programa. &emsp;
+                                <label>
+                                    <input type="radio" name="p9" value="r" required> &#10003;
+                                </label>
+                            </li> 
+                            <li>&emsp;A. Hablaría con personas que conozcan el programa. &emsp;
+                                <label>
+                                    <input type="radio" name="p9" value="a" required> &#10003;
+                                </label>
+                            </li>
+                            <li>&emsp;K. Empezaría a utilizarlo y aprender por ensayo y error. &emsp;
+                                <label>
+                                    <input type="radio" name="p9" value="k" required> &#10003;
+                                </label>
+                            </li>
+                            <li>&emsp;V. Seguiría los diagramas de un libro. &emsp;
+                                <label>
+                                    <input type="radio" name="p9" value="v" required> &#10003;
+                                </label>
+                            </li>
+                        </ul>
+                        <li>10. Cuando aprendo de Internet, me gusta: <br>
+                        <ul>
+                            <li>&emsp;K. Los vídeos que muestran cómo hacer o fabricar algo. &emsp;
+                                <label>
+                                    <input type="radio" name="p10" value="k" required> &#10003;
+                                </label>
+                            </li> 
+                            <li>&emsp;V. El diseño y las características visuales interesantes. &emsp;
+                                <label>
+                                    <input type="radio" name="p10" value="v" required> &#10003;
+                                </label>
+                            </li>
+                            <li>&emsp;R. Descripciones, listas y explicaciones escritas interesantes. &emsp;
+                                <label>
+                                    <input type="radio" name="p10" value="r" required> &#10003;
+                                </label>
+                            </li>
+                            <li>&emsp;A. Los canales de audio donde puedo escuchar podcasts o entrevistas. &emsp;
+                                <label>
+                                    <input type="radio" name="p10" value="a" required> &#10003;
+                                </label>
+                            </li>
+                        </ul>
+                        <li>11. Quiero aprender sobre un nuevo proyecto. Me gustaría pedir: <br>
+                        <ul>
+                            <li>&emsp;V. Diagramas que muestren las etapas del proyecto con gráficos de beneficios y costes. &emsp;
+                                <label>
+                                    <input type="radio" name="p11" value="v" required> &#10003;
+                                </label>
+                            </li> 
+                            <li>&emsp;R. Un informe escrito que describa las principales características del proyecto. &emsp;
+                                <label>
+                                    <input type="radio" name="p11" value="r" required> &#10003;
+                                </label>
+                            </li>
+                            <li>&emsp;A. Una oportunidad para hablar sobre el proyecto. &emsp;
+                                <label>
+                                    <input type="radio" name="p11" value="a" required> &#10003;
+                                </label>
+                            </li>
+                            <li>&emsp;K. Ejemplos en los que el proyecto se haya utilizado con éxito. &emsp;
+                                <label>
+                                    <input type="radio" name="p11" value="k" required> &#10003;
+                                </label>
+                            </li>
+                        </ul>
+                        <li>12. Quiero aprender a tomar mejores fotos. Yo: <br>
+                        <ul>
+                            <li>&emsp;A. Haría preguntas y hablaría sobre la cámara y sus características. &emsp;
+                                <label>
+                                    <input type="radio" name="p12" value="a" required> &#10003;
+                                </label>
+                            </li> 
+                            <li>&emsp;R. Utilizaría las instrucciones escritas sobre lo que hay que hacer. &emsp;
+                                <label>
+                                    <input type="radio" name="p12" value="r" required> &#10003;
+                                </label>
+                            </li>
+                            <li>&emsp;V. Utilizaría diagramas que muestren la cámara y lo que hace cada parte. &emsp;
+                                <label>
+                                    <input type="radio" name="p12" value="v" required> &#10003;
+                                </label>
+                            </li>
+                            <li>&emsp;K. Utilizaría ejemplos de fotos buenas y malas mostrando cómo mejorarlas. &emsp;
+                                <label>
+                                    <input type="radio" name="p12" value="k" required> &#10003;
+                                </label>
+                            </li>
+                        </ul>
+                    </ul>
+                </div>
+
+                <div id="tab4" class="tabcontent" style="display: none;">
+                    <ul>
+                        <li>13. Prefiero un presentador o un profesor que utilice: <br>
+                        <ul>
+                            <li>&emsp;K. Demostraciones, modelos o sesiones prácticas. &emsp;
+                                <label>
+                                    <input type="radio" name="p13" value="k" required> &#10003;
+                                </label>
+                            </li> 
+                            <li>&emsp;A. Preguntas y respuestas, charlas, discusiones en grupo u oradores invitados. &emsp;
+                                <label>
+                                    <input type="radio" name="p13" value="a" required> &#10003;
+                                </label>
+                            </li>
+                            <li>&emsp;R. Folletos, libros o lecturas. &emsp;
+                                <label>
+                                    <input type="radio" name="p13" value="r" required> &#10003;
+                                </label>
+                            </li>
+                            <li>&emsp;V. Diagramas, cuadros, mapas o gráficos. &emsp;
+                                <label>
+                                    <input type="radio" name="p13" value="v" required> &#10003;
+                                </label>
+                            </li>
+                        </ul>
+                        <li>14. Acabo de terminar una competencia o una prueba y me gustaría recibir una opinión. Me gustaría recibirla:<br>
+                        <ul>
+                            <li>&emsp;K. Utilizando ejemplos de lo que he hecho. &emsp;
+                                <label>
+                                    <input type="radio" name="p14" value="k" required> &#10003;
+                                </label>
+                            </li> 
+                            <li>&emsp;R. Mediante una descripción escrita de mis resultados. &emsp;
+                                <label>
+                                    <input type="radio" name="p14" value="r" required> &#10003;
+                                </label>
+                            </li>
+                            <li>&emsp;A. De alguien que lo hable conmigo. &emsp;
+                                <label>
+                                    <input type="radio" name="p14" value="a" required> &#10003;
+                                </label>
+                            </li>
+                            <li>&emsp;V. Mediante gráficos que muestren lo que alcancé. &emsp;
+                                <label>
+                                    <input type="radio" name="p14" value="v" required> &#10003;
+                                </label>
+                            </li>
+                        </ul>
+                        <li>15. Quiero informarme sobre una casa o un apartamento. Antes de visitarla quisiera: <br>
+                        <ul>
+                            <li>&emsp;K. Ver un vídeo de la propiedad. &emsp;
+                                <label>
+                                    <input type="radio" name="p15" value="k" required> &#10003;
+                                </label>
+                            </li> 
+                            <li>&emsp;A. Una conversación con el propietario. &emsp;
+                                <label>
+                                    <input type="radio" name="p15" value="a" required> &#10003;
+                                </label>
+                            </li>
+                            <li>&emsp;R. Una descripción impresa de las habitaciones y las características. &emsp;
+                                <label>
+                                    <input type="radio" name="p15" value="r" required> &#10003;
+                                </label>
+                            </li>
+                            <li>&emsp;V. Un plano que muestre las habitaciones y un mapa de la zona. &emsp;
+                                <label>
+                                    <input type="radio" name="p15" value="v" required> &#10003;
+                                </label>
+                            </li>
+                        </ul>
+                        <li>16. Quiero montar una mesa de madera que viene por partes. Aprendería mejor con: <br>
+                        <ul>
+                            <li>&emsp;V. Diagramas que muestren cada etapa del montaje. &emsp;
+                                <label>
+                                    <input type="radio" name="p16" value="v" required> &#10003;
+                                </label>
+                            </li> 
+                            <li>&emsp;A. Los consejos de alguien que lo haya hecho antes. &emsp;
+                                <label>
+                                    <input type="radio" name="p16" value="a" required> &#10003;
+                                </label>
+                            </li>
+                            <li>&emsp;R. Las instrucciones escritas que vienen con las piezas de la mesa.  &emsp;
+                                <label>
+                                    <input type="radio" name="p16" value="r" required> &#10003;
+                                </label>
+                            </li>
+                            <li>&emsp;K. Un vídeo de una persona montando una mesa similar. &emsp;
+                                <label>
+                                    <input type="radio" name="p16" value="k" required> &#10003;
+                                </label>
+                            </li>
+                        </ul>
+                    </ul>
+                </div>
+
+
+            </div>
+            <div style="flex: 1; text-align: center;">
+                <img src="{% static 'blog/niños2.png' %}" alt="Imagen Niños" style="width: 100%; max-width: 300px;">
+                <div style="margin-top: 20px;">
+                    <a href="{% url 'guardar_respuestast2' %}">
+                        <button type="submit" style="padding: 10px 20px; background-color: #007BFF; color: white; border: none; border-radius: 5px;">Terminar Test</button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </form>
+<style>
+    /* Estilos para las pestañas */
+    .tabcontent {
+        display: none;
+        padding: 20px;
+    }
+
+    .tablinks {
+        background-color: #f1f1f1;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        padding: 10px 15px;
+        font-size: 16px;
+    }
+
+    .tablinks:hover {
+        background-color: #ddd;
+    }
+
+    .tablinks:focus {
+        background-color: #ddd;
+    }
+
+    .tablinks.active {
+        background-color: purple; /* Color morado para el botón seleccionado */
+        color: white; /* Color de texto blanco */
+    }
+
+    /* Ajustes para las preguntas en negrita */
+    strong {
+        font-weight: bold;
+    }
+</style>
+<script>
+    function openTab(evt, tabName) {
+        // Oculta todas las pestañas
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";  
+        }
+
+        // Elimina la clase "active" de todos los botones
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+
+        // Muestra la pestaña activa y añade la clase "active" al botón que fue clicado
+        document.getElementById(tabName).style.display = "block";  
+        evt.currentTarget.className += " active";
+    }
+
+    // Abre la primera pestaña por defecto
+    document.addEventListener("DOMContentLoaded", function() {
+        document.getElementById("defaultOpen").click();
+    });
+</script>
+{% endblock %}
