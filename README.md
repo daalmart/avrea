@@ -1,1 +1,2 @@
-First, clone the repository to your local machine:
+**First, clone the repository to your local machine:
+**
