@@ -2,6 +2,7 @@ Django==5.1.4
 openpyxl
 numpy<1.25
 pandas
+pip install --upgrade pip
 opencv-python
 tf-keras
 tensorflow
